@@ -25,3 +25,5 @@ echo "Starting SSH on $1"
 node_ip=$(terraform output -raw -state=../terraform/terraform.tfstate $terraform_name 2>&1)
 echo "${terraform_name} (${node_ip})"
 ssh ${node_ip} -l ubuntu -i ~/.ssh/captains_cbci_trad
+
+#ssh -J ubuntu@34.225.7.116 -i ~/.ssh/captains_cbci_trad  ubuntu@10.0.1.100  -i ~/.ssh/captains_cbci_trad
