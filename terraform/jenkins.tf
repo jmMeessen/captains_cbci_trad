@@ -1,22 +1,20 @@
 /*
   Database Servers
 */
-resource "aws_security_group" "jenkins" {
-  name        = "vpc_jenkins"
-  description = "Allow incoming web connections."
+resource "aws_security_group" "sg-jenkins" {
 
-  ingress { # SQL Server
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    security_groups = ["0.0.0.0/0"]
-  }
-  ingress { # MySQL
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    security_groups = ["0.0.0.0/0"]
-  }
+  # ingress { # SQL Server
+  #   from_port       = 80
+  #   to_port         = 80
+  #   protocol        = "tcp"
+  #   security_groups = ["0.0.0.0/0"]
+  # }
+  # ingress {
+  #   from_port       = 443
+  #   to_port         = 443
+  #   protocol        = "tcp"
+  #   security_groups = ["0.0.0.0/0"]
+  # }
 
   ingress {
     from_port   = 22
@@ -58,7 +56,7 @@ resource "aws_instance" "jenkins" {
   availability_zone      = var.aws_availability_zone
   instance_type          = "m1.medium"
   key_name               = aws_key_pair.my-aws-key.key_name
-  vpc_security_group_ids = aws_security_group.jenkins.id
+  vpc_security_group_ids = [aws_security_group.sg-jenkins.id]
   subnet_id              = aws_subnet.private_subnet.id
   source_dest_check      = false
 

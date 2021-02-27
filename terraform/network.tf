@@ -85,26 +85,34 @@ resource "aws_security_group" "nat" {
   }
 }
 
-resource "aws_instance" "nat" {
-  ami                         = "ami-30913f47" # this is a special ami preconfigured to do NAT
-  availability_zone           = var.aws_availability_zone
-  instance_type               = "m1.small"
-  key_name                    = aws_key_pair.my-aws-key.key_name
-  vpc_security_group_ids      = [aws_security_group.nat.id]
-  subnet_id                   = aws_subnet.public_subnet.id
-  associate_public_ip_address = true
-  source_dest_check           = false
+resource "aws_eip" "nat" {
+  vpc = true
+
+  tags = {
+    Name       = "Jmm NAT eip"
+    Owner      = "Jmm"
+    "cb:owner" = "user:Jmm"
+  }
+
+  # lifecycle {
+  #   create_before_destroy = true
+  # }
+}
+
+resource "aws_nat_gateway" "nat_gtw" {
+
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public_subnet.id
 
   tags = {
     Name       = "Jmm VPC NAT"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }
-}
 
-resource "aws_eip" "nat" {
-  instance = aws_instance.nat.id
-  vpc      = true
+  # lifecycle {
+  #   create_before_destroy = true
+  # }
 }
 
 
@@ -148,7 +156,7 @@ resource "aws_route_table_association" "public_subnet" {
 /*
   Private Subnet
 */
-resource "aws_subnet" "private-subnet" {
+resource "aws_subnet" "private_subnet" {
   vpc_id = aws_vpc.jmm-aws-vpc.id
 
   cidr_block        = var.private_subnet_cidr
@@ -161,22 +169,23 @@ resource "aws_subnet" "private-subnet" {
   }
 }
 
-resource "aws_route_table" "private-subnet" {
+resource "aws_route_table" "route_table" {
   vpc_id = aws_vpc.jmm-aws-vpc.id
 
-  route {
-    cidr_block  = "0.0.0.0/0"
-    instance_id = aws_instance.nat.id
-  }
-
   tags = {
-    Name       = "Private Subnet"
+    Name       = "Private Subnet route table"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }
 }
 
-resource "aws_route_table_association" "private-subnet" {
-  subnet_id      = aws_subnet.private-subnet.id
-  route_table_id = aws_route_table.private-subnet.id
+resource "aws_route" "private" {
+  route_table_id         = aws_route_table.route_table.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.nat_gtw.id
+}
+
+resource "aws_route_table_association" "private_subnet" {
+  subnet_id      = aws_subnet.private_subnet.id
+  route_table_id = aws_route_table.route_table.id
 }
