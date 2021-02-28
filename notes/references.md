@@ -5,7 +5,7 @@
 * [How to use SSH to proxy through a Linux jump host](https://www.techrepublic.com/article/how-to-use-ssh-to-proxy-through-a-linux-jump-host/)
 * [AWS VPC with Public and Private Subnets - Komarov](https://github.com/yurymkomarov/terraform-aws-vpc-public-private)
 * [Damien's network training](https://dduportal.github.io/isl-reseau-2018/#/introduction_au_rseau)
-* [Getting my own Public IP : Terraform](https://www.reddit.com/r/Terraform/comments/)9g62ox/getting_my_own_public_ip/
+* [Getting my own Public IP : Terraform](https://www.reddit.com/r/Terraform/comments/9g62ox/getting_my_own_public_ip/)
 * [Terraform: AWS VPC with Private and Public Subnets — Nick Charlton](https://nickcharlton.net/posts/terraform-aws-vpc.html)
 * [Running Ansible through SSH Jump / Bastion Host – techbeatly (Jul 2020)](https://www.techbeatly.com/2020/07/running-ansible-through-ssh-jump-bastion-host.html#.YDoHMGPTVpQ)
 * [Using Ansible through a Bastion Host (Mar 2020)](https://blog.networktocode.com/post/ansible-bastion-host/)
