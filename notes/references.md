@@ -10,3 +10,9 @@
 * [Running Ansible through SSH Jump / Bastion Host – techbeatly (Jul 2020)](https://www.techbeatly.com/2020/07/running-ansible-through-ssh-jump-bastion-host.html#.YDoHMGPTVpQ)
 * [Using Ansible through a Bastion Host (Mar 2020)](https://blog.networktocode.com/post/ansible-bastion-host/)
 * [Using Ansible with a jump host (Dec 2019)](https://leftasexercise.com/2019/12/23/using-ansible-with-a-jump-host/)
+
+## Ansible Jump servers
+* https://www.techbeatly.com/2020/07/running-ansible-through-ssh-jump-bastion-host.html#.YDq-H11KhpR
+* https://blog.networktocode.com/post/ansible-bastion-host/
+* https://leftasexercise.com/2019/12/23/using-ansible-with-a-jump-host/
+* https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to
