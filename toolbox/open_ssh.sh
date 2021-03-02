@@ -35,8 +35,8 @@ node_ip=$(terraform output -raw -state=../terraform/terraform.tfstate $terraform
 
 if [ "$needs_jump" == "yes" ]; then
   echo "${terraform_name} (${node_ip}) via bastion (${bastion_ip})"
-  ssh -J ubuntu@${bastion_ip} -i ~/.ssh/captains_cbci_trad  ubuntu@${node_ip} -i ~/.ssh/captains_cbci_trad
+  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${bastion_ip} -i ~/.ssh/captains_cbci_trad  ubuntu@${node_ip} -i ~/.ssh/captains_cbci_trad
 else
   echo "${terraform_name} (${node_ip})"
-  ssh ${node_ip} -l ubuntu -i ~/.ssh/captains_cbci_trad
+  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${node_ip} -l ubuntu -i ~/.ssh/captains_cbci_trad
 fi

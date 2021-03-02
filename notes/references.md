@@ -16,3 +16,5 @@
 * https://blog.networktocode.com/post/ansible-bastion-host/
 * https://leftasexercise.com/2019/12/23/using-ansible-with-a-jump-host/
 * https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to
+
+* https://serverfault.com/questions/823687/ssh-keyscan-through-a-bastion
