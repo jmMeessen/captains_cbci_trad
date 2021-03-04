@@ -10,6 +10,7 @@
 * [Running Ansible through SSH Jump / Bastion Host – techbeatly (Jul 2020)](https://www.techbeatly.com/2020/07/running-ansible-through-ssh-jump-bastion-host.html#.YDoHMGPTVpQ)
 * [Using Ansible through a Bastion Host (Mar 2020)](https://blog.networktocode.com/post/ansible-bastion-host/)
 * [Using Ansible with a jump host (Dec 2019)](https://leftasexercise.com/2019/12/23/using-ansible-with-a-jump-host/)
+* [Provisioning a Network Load Balancer with Terraform (Nov 2020)](https://hceris.com/provisioning-a-network-load-balancer-with-terraform/)
 
 ## Ansible Jump servers
 * https://www.techbeatly.com/2020/07/running-ansible-through-ssh-jump-bastion-host.html#.YDq-H11KhpR

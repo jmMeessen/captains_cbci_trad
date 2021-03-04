@@ -169,6 +169,8 @@ resource "aws_subnet" "private_subnet" {
   }
 }
 
+//define the route table and configure it so that all machines in the private 
+//subnet can reach the Internet via the Gateway
 resource "aws_route_table" "route_table" {
   vpc_id = aws_vpc.jmm-aws-vpc.id
 
