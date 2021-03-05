@@ -4,6 +4,8 @@
 terraform/.terraform/
 #terraform/.terraform.lock.hcl
 
+# Terraform generated ssh-config
+terraform/ssh_config
 
 #Public keys for AWS
 terraform/*.pub
