@@ -4,10 +4,10 @@ resource "aws_lb" "loadblancer-1" {
 
   load_balancer_type = "network"
   #subnets = data.aws_subnet_ids.this.ids
-  subnets = aws_subnet.public_subnet.id
+  subnets = [aws_subnet.public_subnet.id]
 
   tags = {
-    Name       = "Jmm's LoadBalancer #1"
+    Name       = "Jmm LoadBalancer 1"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }
@@ -32,23 +32,21 @@ variable "ports" {
 }
 
 resource "aws_lb_listener" "lb1-listener" {
-  for_each = var.ports
 
   load_balancer_arn = aws_lb.loadblancer-1.arn
 
   protocol = "TCP"
-  port     = each.value
+  port     = 80
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.target_group[each.key].arn
+    target_group_arn = aws_lb_target_group.target_group.arn
   }
 }
 
 resource "aws_lb_target_group" "target_group" {
-  for_each = var.ports
 
-  port        = each.value
+  port        = 80
   protocol    = "TCP"
   vpc_id      = aws_vpc.jmm-aws-vpc.id
   target_type = "ip"
@@ -63,12 +61,13 @@ resource "aws_lb_target_group" "target_group" {
 }
 
 resource "aws_lb_target_group_attachment" "target_group-attachment" {
-  for_each = var.ports
 
-  target_group_arn  = aws_lb_target_group.target_group[each.value].arn
-  target_id         = aws_instance.jenkins.private_ip
-  availability_zone = "all"
-  port              = each.value
+  target_group_arn = aws_lb_target_group.target_group.arn
+  target_id        = aws_instance.jenkins.private_ip
+  port             = 8080
 }
 
 
+output "load_balancer_dns" {
+  value = aws_lb.loadblancer-1.dns_name
+}
