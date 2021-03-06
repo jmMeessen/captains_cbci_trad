@@ -8,4 +8,5 @@ set -e
 cd ../terraform
 terraform destroy -auto-approve
 rm terraform.tfstate
+rm ssh_config
 cd - 
