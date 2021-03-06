@@ -46,7 +46,7 @@ resource "aws_lb_listener" "lb1-listener" {
 
 resource "aws_lb_target_group" "target_group" {
 
-  port        = 80
+  port        = 8080
   protocol    = "TCP"
   vpc_id      = aws_vpc.jmm-aws-vpc.id
   target_type = "ip"

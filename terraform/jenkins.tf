@@ -3,18 +3,19 @@
 */
 resource "aws_security_group" "sg-jenkins" {
 
-  # ingress { # SQL Server
-  #   from_port       = 80
-  #   to_port         = 80
-  #   protocol        = "tcp"
-  #   security_groups = ["0.0.0.0/0"]
-  # }
-  # ingress {
-  #   from_port       = 443
-  #   to_port         = 443
-  #   protocol        = "tcp"
-  #   security_groups = ["0.0.0.0/0"]
-  # }
+  ingress {
+    from_port   = 80
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_cidr]
+  }
+
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_cidr]
+  }
 
   ingress {
     from_port   = 22

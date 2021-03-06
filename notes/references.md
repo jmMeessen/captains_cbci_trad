@@ -19,3 +19,6 @@
 * https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to
 
 * https://serverfault.com/questions/823687/ssh-keyscan-through-a-bastion
+
+## some commands
+* checking if the port is open: `nc -zv 10.0.1.64 22`
