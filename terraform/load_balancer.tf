@@ -1,26 +1,24 @@
 //Define and configure a load balancer with an eip pointing to the jenkins machine
 
+resource "aws_eip" "eip_nlb" {
+  tags = {
+    Name = "jmm-network-lb-eip"
+  }
+}
+
 resource "aws_lb" "loadblancer-1" {
 
   load_balancer_type = "network"
-  #subnets = data.aws_subnet_ids.this.ids
-  subnets = [aws_subnet.public_subnet.id]
+  subnet_mapping {
+    subnet_id     = aws_subnet.public_subnet.id
+    allocation_id = aws_eip.eip_nlb.id
+  }
 
   tags = {
     Name       = "Jmm LoadBalancer 1"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }
-
-  # subnet_mapping {
-  #   subnet_id            = aws_subnet.example1.id
-  #   private_ipv4_address = "10.0.1.15"
-  # }
-
-  # subnet_mapping {
-  #   subnet_id            = aws_subnet.example2.id
-  #   private_ipv4_address = "10.0.2.15"
-  # }
 }
 
 variable "ports" {
@@ -70,4 +68,17 @@ resource "aws_lb_target_group_attachment" "target_group-attachment" {
 
 output "load_balancer_dns" {
   value = aws_lb.loadblancer-1.dns_name
+}
+
+output "load_balancer_ip" {
+  value = aws_eip.eip_nlb.public_ip
+}
+
+//Point jenkins.the-captains-shack.com to the load balancer
+resource "ovh_domain_zone_record" "jenkins" {
+  zone      = var.domain_name
+  subdomain = var.subdomain
+  fieldtype = "A"
+  ttl       = "30"
+  target    = aws_eip.eip_nlb.public_ip
 }

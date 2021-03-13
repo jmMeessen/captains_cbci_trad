@@ -20,5 +20,9 @@
 
 * https://serverfault.com/questions/823687/ssh-keyscan-through-a-bastion
 
+## DNS redirection to load balancer
+* https://stackoverflow.com/questions/56713493/terraform-how-to-get-ip-address-of-aws-lb
+* https://stackoverflow.com/questions/49761610/how-do-i-attach-an-elastic-ip-upon-creation-of-a-network-load-balancer-with-terr
+
 ## some commands
 * checking if the port is open: `nc -zv 10.0.1.64 22`

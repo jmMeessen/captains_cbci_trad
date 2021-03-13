@@ -27,3 +27,13 @@ variable "private_subnet_cidr" {
   description = "CIDR for the Private Subnet"
   default     = "10.0.1.0/24"
 }
+
+variable "domain_name" {
+  description = "the base domain name when setting up the domain"
+  default     = "the-captains-shack.com"
+}
+
+variable "subdomain" {
+  description = "the subdomain to add to domain_name"
+  default     = "jenkins"
+}

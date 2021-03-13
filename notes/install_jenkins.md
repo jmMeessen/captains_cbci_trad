@@ -22,7 +22,7 @@ sudo add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
 wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
 sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 sudo apt-get update
-sudo apt-get -y install adoptopenjdk-8-hotspot jenkins
+sudo apt-get -y install adoptopenjdk-8-hotspot
 sudo apt-get -y install jenkins
 
 ```
