@@ -7,21 +7,19 @@ set -u              #fail script when a variable is uninitialised
 # For consistant processing, CD to the Toolbox directory
 cd "$(cd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null && pwd)" || return
 
+ansible_file="main_playbook.yml"
+
+# use a default vlaue or the parameter
+# if [ $# -lt 1 ]
+# then
+#         echo "Usage : $0 ansibleFile in the deploy dir "
+#         exit
+# fi
+
 start=`date +%s`
 
-source ~/.ovhrc
-
-./update_aws_token.sh
-
-cd ../terraform
-terraform init
-terraform validate
-terraform fmt
-terraform apply -auto-approve
-
-#we need a local copy of the state so that we can query it with Ansible
-terraform state pull > terraform.tfstate 
-cd -
+export ANSIBLE_SSH_ARGS="-F /Users/jmm/work/captains_cbci_trad/work_data/ssh_config -o ControlMaster=auto -o ControlPersist=60s"
+ansible-playbook --inventory-file=../work_data/inventory.yaml --vault-password-file ../toolbox/.work-password ../deploy/${ansible_file}
 
 end=`date +%s`
 nbr_secs=`expr $end - $start`

@@ -1,0 +1,19 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+  # try pinging the system now
+  - name: Trying if the Ansible communication works now (using a Ping)
+    ansible.builtin.ping:  
+  # - name: Create directory
+  #   ansible.builtin.file:
+  #     path: /tmp/ansible_speed
+  #     state: directory
+  # - name: Create file
+  #   ansible.builtin.copy:
+  #     content: SPEED
+  #     dest: /tmp/ansible_speed/speed
+  # - name: Remove directory
+  #   ansible.builtin.file:
+  #     path: /tmp/ansible_speed
+  #     state: absent

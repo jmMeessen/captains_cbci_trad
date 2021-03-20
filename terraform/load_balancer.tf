@@ -1,18 +1,11 @@
-//Define and configure a load balancer with an eip pointing to the jenkins machine
+//Define and configure a load balancer pointing to the jenkins machine 
+//and update the DNS record
 
-resource "aws_eip" "eip_nlb" {
-  tags = {
-    Name = "jmm-network-lb-eip"
-  }
-}
 
 resource "aws_lb" "loadblancer-1" {
 
   load_balancer_type = "network"
-  subnet_mapping {
-    subnet_id     = aws_subnet.public_subnet.id
-    allocation_id = aws_eip.eip_nlb.id
-  }
+  subnets            = [aws_subnet.public_subnet.id]
 
   tags = {
     Name       = "Jmm LoadBalancer 1"
@@ -70,15 +63,12 @@ output "load_balancer_dns" {
   value = aws_lb.loadblancer-1.dns_name
 }
 
-output "load_balancer_ip" {
-  value = aws_eip.eip_nlb.public_ip
-}
 
 //Point jenkins.the-captains-shack.com to the load balancer
 resource "ovh_domain_zone_record" "jenkins" {
   zone      = var.domain_name
   subdomain = var.subdomain
-  fieldtype = "A"
+  fieldtype = "CNAME"
   ttl       = "30"
-  target    = aws_eip.eip_nlb.public_ip
+  target    = "${aws_lb.loadblancer-1.dns_name}."
 }

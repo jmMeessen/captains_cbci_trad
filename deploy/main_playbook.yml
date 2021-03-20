@@ -1,0 +1,59 @@
+
+
+- hosts: all
+  roles:
+    - common
+
+- hosts: docker_agent
+  vars:
+    jenkins_node_type: "agent_docker"
+  roles:
+    - agent_docker
+    - docker_ldap
+
+- hosts: jenkins
+  roles:
+    - java8_jdk
+    - jenkins
+
+# - hosts: jmm_cjoc
+
+#   # this is required as only python3 is installed on Ubuntu AMI (Ansible fails otherwise)
+#   gather_facts: False
+
+#   vars:
+#     jenkins_node_type: "cjoc"
+#     ansible_python_interpreter: auto
+
+#   roles:
+#     - general
+#     - jenkins
+   
+
+
+# - hosts: jmm_client_master
+
+#   # this is required as only python3 is installed on Ubuntu AMI (Ansible fails otherwise)
+#   gather_facts: False
+
+#   vars:
+#     jenkins_node_type: "master"
+#     ansible_python_interpreter: auto
+
+#   roles:
+#     - general
+#     - jenkins  
+
+
+# - hosts: jmm_agent1
+
+#   # this is required as only python3 is installed on Ubuntu AMI (Ansible fails otherwise)
+  
+#   gather_facts: False
+
+#   vars:
+#     jenkins_node_type: "agent_jnlp"
+#     ansible_python_interpreter: auto
+
+#   roles:
+#     - agent_jnlp

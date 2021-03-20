@@ -1,0 +1,5 @@
+## This should be encrypted with vault
+
+ldap_jenkins_admin_passw: "someAdminPass"
+ldap_jenkins_user_passw: "beGood"
+ldap_admin_passw: "mySecret"

@@ -1,0 +1,39 @@
+---
+
+# # try pinging the system now
+# - name: Trying if the Ansible communication works now (using a Ping)
+#   ansible.builtin.ping:
+
+# # Used to validate that it is possible to install a package and that everything is working fine
+# - name: Install COWSAY
+#   become: true
+#   apt: 
+#     update_cache: yes
+#     name: cowsay
+
+# - name: "the cow says hello"
+#   ansible.builtin.command: cowsay hello, world!
+#   register: cowsay_out
+# - debug: var=cowsay_out.stdout_lines
+
+- name: Update the system
+  become: true
+  apt:
+    update-cache: yes
+    upgrade: "yes"
+
+- name: Install JQ (Json Query tool)
+  become: true
+  apt:
+    update_cache: yes
+    name: jq
+
+- name: set VIMs background to dark by default
+  lineinfile:
+    path: "/home/ubuntu/.vimrc"
+    create: yes
+    owner: "ubuntu"
+    group: "ubuntu"
+    mode: u=rw,g=r,o=r
+    insertafter: EOF
+    line: ':set background=dark'

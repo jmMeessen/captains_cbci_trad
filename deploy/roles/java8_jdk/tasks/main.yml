@@ -1,0 +1,22 @@
+---
+
+- name: Add the adoptopenjdk repo APT Key
+  become: true
+  apt_key:
+    url: "https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public"
+    state: present
+
+# /etc/apt/sources.list.d/adoptopenjdk_jfrog_io_adoptopenjdk_deb.list
+
+
+- name: Add the adoptopenjdk package repository
+  become: true
+  apt_repository:
+    repo: "deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ {{ ansible_distribution_release }} main"
+    state: present
+
+- name: Install adoptopenjdk V8
+  become: true
+  apt:
+    update_cache: yes
+    name: "adoptopenjdk-8-hotspot"

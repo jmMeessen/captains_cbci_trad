@@ -19,6 +19,12 @@
 * https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to
 
 * https://serverfault.com/questions/823687/ssh-keyscan-through-a-bastion
+* https://stackoverflow.com/questions/10765946/ssh-use-known-hosts-other-than-home-ssh-known-hosts 
+
+* https://dzone.com/articles/speed-up-ansible 
+
+```
+
 
 ## DNS redirection to load balancer
 * https://stackoverflow.com/questions/56713493/terraform-how-to-get-ip-address-of-aws-lb

@@ -1,0 +1,15 @@
+---
+jump_host:
+    hosts:
+        bastion:
+            ansible_ssh_user: ubuntu
+
+
+target_hosts:
+    hosts:
+        jenkins:
+            ansible_ssh_user: ubuntu
+        docker_agent: 
+            ansible_ssh_user: ubuntu
+
+

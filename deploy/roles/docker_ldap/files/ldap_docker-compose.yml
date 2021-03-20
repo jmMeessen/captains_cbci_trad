@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+
+  ldap:
+    build: ./image
+    image: opendj
+    #restart: always
+    ports:
+      - 389:1389

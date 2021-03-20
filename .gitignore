@@ -5,9 +5,13 @@ terraform/.terraform/
 #terraform/.terraform.lock.hcl
 
 # Terraform generated ssh-config
-terraform/ssh_config
+work_data/ssh_config
+
+# Volatile knownhost file
+work_data/hostfile
 
 #Public keys for AWS
 terraform/*.pub
 
-
+toolbox/.work-password
+notes/infra-cost.json

@@ -1,0 +1,286 @@
+## Top level of "example.com"
+
+dn: dc=example,dc=com
+objectclass: top
+objectclass: domain
+dc: example
+
+#####################################################################
+
+## FIRST Level hierarchy - people 
+
+dn: ou=People, dc=example,dc=com
+objectclass: top
+objectclass: organizationalunit
+ou: People
+aci: (targetattr="*||+")(version 3.0; acl "IDM Access"; allow (all)
+  userdn="ldap:///uid=idm,ou=Administrators,dc=example,dc=com";)
+
+## List of people
+
+## [admin]
+## - admin
+## - cfgUser
+# [local_admin]
+# - local_admin
+# [dev]
+# - dev1
+# - dev2
+# [reader]
+# - reader1
+# - reader2
+# [tester]
+# - tester1
+# - tester2
+
+## - admin
+dn: uid=admin, ou=People, dc=example,dc=com
+cn: admin
+displayname: Jenkins Admin
+sn: Admin
+givenname: User
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+ou: Operations
+ou: People
+l: New York
+uid: admin
+mail: admin@example.com
+telephonenumber: +1 408 555 1236
+facsimiletelephonenumber: +1 408 555 4323
+userpassword: {{ ldap_jenkins_admin_passw }}
+
+# - cfgUser
+dn: uid=Jenkins_cfg, ou=People, dc=example,dc=com
+cn: Jenkins_cfg
+displayname: Jenkins configuration user
+sn: Configuration
+givenname: User
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+ou: Operations
+ou: People
+l: New York
+uid: cfgUser
+mail: cfguser@example.com
+telephonenumber: +1 408 555 1236
+facsimiletelephonenumber: +1 408 555 4323
+userpassword: {{ ldap_jenkins_admin_passw }}
+
+# - local_admin
+dn: uid=local_admin, ou=People, dc=example,dc=com
+cn: local_admin
+displayname: Local Admin
+sn: Spaak
+givenname: Paul-Henri
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+ou: Operations
+ou: People
+l: Washington
+uid: local_admin
+mail: local_admin@example.com
+telephonenumber: +1 408 555 1236
+userpassword: {{ ldap_jenkins_user_passw }}
+
+# - dev1
+dn: uid=dev1, ou=People, dc=example,dc=com
+cn: dev1
+displayname: Developer 1
+sn: Met De Pet
+givenname: Jan
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+ou: Operations
+ou: People
+l: New York
+uid: dev1
+mail: dev1@example.com
+telephonenumber: +1 408 555 1236
+userpassword: {{ ldap_jenkins_user_passw }}
+
+# - dev2
+dn: uid=dev2, ou=People, dc=example,dc=com
+cn: dev2
+displayname: Developer 2
+sn: Ingals
+givenname: Charles
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+ou: Operations
+ou: People
+l: New York
+uid: dev2
+mail: dev2@example.com
+telephonenumber: +1 408 555 1236
+userpassword: {{ ldap_jenkins_user_passw }}
+
+# - reader1
+dn: uid=reader1, ou=People, dc=example,dc=com
+cn: reader1
+displayname: Reader 1
+sn: Ceasar
+givenname: Julius
+uid: reader1
+mail: reader1@example.com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+ou: Operations
+ou: People
+l: Rome
+telephonenumber: +1 408 555 1236
+userpassword: {{ ldap_jenkins_user_passw }}
+
+# - reader2
+dn: uid=reader2, ou=People, dc=example,dc=com
+cn: reader2
+displayname: Reader 2
+sn: Nero
+givenname: Claudius
+uid: reader2
+mail: reader2@example.com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+ou: Operations
+ou: People
+l: Rome
+telephonenumber: +1 408 555 1236
+userpassword: {{ ldap_jenkins_user_passw }}
+
+# - tester1
+dn: uid=tester1, ou=People, dc=example,dc=com
+cn: tester1
+displayname: Tester 1
+sn: Cook
+givenname: James
+uid: tester1
+mail: tester1@example.com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+ou: Operations
+ou: People
+l: Australia
+telephonenumber: +1 408 555 1236
+userpassword: {{ ldap_jenkins_user_passw }}
+
+# - tester2
+dn: uid=tester2, ou=People, dc=example,dc=com
+cn: tester2
+displayname: Tester 2
+sn: Darwin
+givenname: Charles
+uid: tester2
+mail: tester2@example.com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+ou: Operations
+ou: People
+l: Galapagos
+telephonenumber: +1 408 555 1236
+userpassword: {{ ldap_jenkins_user_passw }}
+
+
+#####################################################################
+
+## FIRST Level hierarchy - groups 
+
+dn: ou=Groups, dc=example,dc=com
+objectclass: top
+objectclass: organizationalunit
+ou: Groups
+aci: (targetattr="*||+")(version 3.0; acl "IDM Access"; allow (all)
+  userdn="ldap:///uid=idm,ou=Administrators,dc=example,dc=com";)
+
+## Group definitions
+
+# [jenkins_admin]
+dn: cn=jenkins_admin,ou=Groups,dc=example,dc=com
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: jenkins_admin
+ou: Groups
+uniquemember: uid=admin, ou=People, dc=example,dc=com
+description: Jenkins admins
+
+# [local_jenkins_admin]
+dn: cn=local_jenkins_admin,ou=Groups,dc=example,dc=com
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: local_jenkins_admin
+ou: Groups
+uniquemember: uid=local_admin, ou=People, dc=example,dc=com
+description: Local admins (deputy admins)
+
+# [Dev]
+dn: cn=Dev,ou=Groups,dc=example,dc=com
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: Dev
+ou: Groups
+uniquemember: uid=dev1, ou=People, dc=example,dc=com
+uniquemember: uid=dev2, ou=People, dc=example,dc=com
+description: Developers
+
+# [Readers]
+
+dn: cn=Readers,ou=Groups,dc=example,dc=com
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: Readers
+ou: Groups
+uniquemember: uid=reader1, ou=People, dc=example,dc=com
+uniquemember: uid=reader2, ou=People, dc=example,dc=com
+description: Just read-only users
+
+# [Testers]
+
+dn: cn=Testers,ou=Groups,dc=example,dc=com
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: Testers
+ou: Groups
+uniquemember: uid=tester1, ou=People, dc=example,dc=com
+uniquemember: uid=tester2, ou=People, dc=example,dc=com
+description: Testers mainly execute pipelines
+
+#####################################################################
+
+## FIRST Level hierarchy - administrators 
+
+dn: ou=Administrators, dc=example,dc=com
+objectclass: top
+objectclass: organizationalunit
+ou: Administrators
+
+dn: uid=idm, ou=Administrators,dc=example,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+uid: idm
+cn: IDM Administrator
+sn: IDM Administrator
+description: Special LDAP acccount used by the IDM
+  to access the LDAP data.
+ou: Administrators
+userPassword: {{ ldap_admin_passw }}
+ds-privilege-name: unindexed-search
+ds-privilege-name: password-reset
