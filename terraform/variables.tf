@@ -37,3 +37,8 @@ variable "subdomain" {
   description = "the subdomain to add to domain_name"
   default     = "jenkins"
 }
+
+variable "internal_domain_name" {
+  description = "the base domain name for the internal DNS"
+  default     = "the-captains-shack.internal"
+}

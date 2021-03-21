@@ -191,3 +191,19 @@ resource "aws_route_table_association" "private_subnet" {
   subnet_id      = aws_subnet.private_subnet.id
   route_table_id = aws_route_table.route_table.id
 }
+
+
+# aws_route53_zone.internal:
+resource "aws_route53_zone" "internal" {
+  comment = "internal zone for cloudbees cluster"
+  name    = var.internal_domain_name
+  tags = {
+    "Name"     = var.internal_domain_name
+    Owner      = "Jmm"
+    "cb:owner" = "user:Jmm"
+  }
+  vpc {
+    vpc_id     = aws_vpc.jmm-aws-vpc.id
+    vpc_region = var.aws_region
+  }
+}

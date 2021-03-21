@@ -79,3 +79,11 @@ resource "aws_instance" "docker_agent" {
     "cb:owner" = "user:Jmm"
   }
 }
+
+resource "aws_route53_record" "ldap" {
+  zone_id = aws_route53_zone.internal.id
+  name    = "ldap.${var.internal_domain_name}"
+  type    = "CNAME"
+  ttl     = "300"
+  records = [trimsuffix(aws_instance.docker_agent.private_dns, ":389")]
+}
