@@ -15,3 +15,4 @@ terraform/*.pub
 
 toolbox/.work-password
 notes/infra-cost.json
+notes/tf_sec.json
