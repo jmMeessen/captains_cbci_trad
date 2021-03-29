@@ -93,10 +93,6 @@ resource "aws_eip" "nat" {
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }
-
-  # lifecycle {
-  #   create_before_destroy = true
-  # }
 }
 
 resource "aws_nat_gateway" "nat_gtw" {
@@ -109,10 +105,6 @@ resource "aws_nat_gateway" "nat_gtw" {
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }
-
-  # lifecycle {
-  #   create_before_destroy = true
-  # }
 }
 
 

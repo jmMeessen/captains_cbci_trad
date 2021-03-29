@@ -1,5 +1,26 @@
 ---
 
+#Jenkins_node_type is defined in the calling playbook
+- name: "Include the 'jenkins' installation specific variables" 
+  include_vars: "jenkins.yml"
+
+- name: Copy the initial configuration before first startup 
+  #Proceeding this way is important so that the noWizard parameter works properly
+  become: true
+  copy:
+    src: "jenkins.cfg"
+    dest: "/etc/default/jenkins"
+    force: no
+    backup: yes
+    owner: "root"
+    group: "root"
+    mode: u=rw,g=r,o=r
+
+
+
+#
+# Install Jenkins
+#
 - name: Add the Jenkins repo APT Key
   become: true
   apt_key:
@@ -18,3 +39,56 @@
   apt:
     update_cache: yes
     name: "jenkins"
+
+
+#
+# Create and populate the init Groovy directory 
+# 
+
+- name: create the init.groovy.d directory
+  become: true
+  file:
+    path: "/var/lib/jenkins/init.groovy.d"
+    state: directory
+    owner: "jenkins"
+    group: "jenkins"
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: initial user creation and security settings
+  include_tasks: 01-initial_jenkins_config.yml
+
+
+#
+# Restart server to load the properties and execute the initscripts
+#
+
+- name: restart the {{ package_name }} service 
+  become: true
+  service:
+    name: "{{ package_name }}"
+    state: restarted
+
+- name: wait for jenkins to be up
+  uri: 
+    url: "{{ jenkins_url }}/login" 
+    status_code: "200" 
+  register: result
+  until: result.status == 200
+  retries: 60
+  delay: 1
+
+
+#
+# Setup everything required to use the CLI
+#
+- name: Call configCLI playbook
+  include_tasks: 03-configCLI.yml
+
+
+# apply the scripted configuration
+
+- name: Install default plugins
+  ansible.builtin.command: "{{ CLI_command }} install-plugin {{ item }} -deploy"
+  loop: "{{ default_plugins }}"
+
+# apply the configuration as code

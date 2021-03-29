@@ -23,7 +23,7 @@ resource "aws_security_group" "bastion_sg" {
     from_port   = -1
     to_port     = -1
     protocol    = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${local.my_public_ip_json.ip}/32"]
   }
 
 
@@ -33,14 +33,6 @@ resource "aws_security_group" "bastion_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  # used to test http connection to the Jenkins server
-  # egress {
-  #   from_port   = 8080
-  #   to_port     = 8080
-  #   protocol    = "tcp"
-  #   cidr_blocks = ["0.0.0.0/0"]
-  # }
 
   egress {
     from_port   = 443
@@ -59,7 +51,7 @@ resource "aws_instance" "bastion" {
   key_name                    = aws_key_pair.my-aws-key.key_name
   vpc_security_group_ids      = [aws_security_group.bastion_sg.id]
   subnet_id                   = aws_subnet.public_subnet.id
-  associate_public_ip_address = true
+  associate_public_ip_address = false
   source_dest_check           = false
 
   tags = {

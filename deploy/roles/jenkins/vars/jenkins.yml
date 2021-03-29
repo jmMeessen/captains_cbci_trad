@@ -1,0 +1,36 @@
+option_friendly_name: "OSS Jenkins"
+key_url: "https://downloads.cloudbees.com/cloudbees-core/traditional/operations-center/rolling/debian/cloudbees.com.key"
+repo_url: "deb https://downloads.cloudbees.com/cloudbees-core/traditional/operations-center/rolling/debian binary/"
+package_name: "jenkins"
+used_port: "8888"
+jenkins_user: "{{ package_name }}"
+jenkins_home_dir: "/var/lib/{{ package_name }}"
+dns_reference: "cjoc_dns"
+jenkins_cfgmgt_dir: "/home/ubuntu/ConfigMgt"
+# jenkins_cfgmgt_ssh_key: "{{ jenkins_cfgmgt_dir }}/.ssh/jenkins_cfgMgr_key"
+# jenkins_cfgmgt_script_dir: "{{ jenkins_cfgmgt_dir }}/jenkins_scripts"
+jenkins_cfgmgt_user: "Jenkins_cfg"
+jenkins_url: "http://jenkins.the-captains-shack.com"
+# sshd_port: "50001"
+#CLI_command: "ssh -i {{ jenkins_cfgmgt_ssh_key }} -l {{ jenkins_cfgmgt_user }} -p {{ sshd_port }} localhost"
+CLI_command: java -jar {{ jenkins_cfgmgt_dir }}/jenkins-cli.jar -s {{ jenkins_url }} -auth @{{ jenkins_cfgmgt_dir }}/cfgAuthfile
+
+default_plugins:
+  - git
+  - configuration-as-code
+  - kubernetes
+  - blueocean
+  - ws-cleanup
+  - timestamper
+  - ssh-slaves
+  - pipeline-github-lib
+  - workflow-aggregator
+  - antisamy-markup-formatter
+  - matrix-auth
+  - ldap
+  - github-branch-source
+  - email-ext
+  - command-launcher
+  - build-timeout
+  - bouncycastle-api
+  - cloudbees-folder

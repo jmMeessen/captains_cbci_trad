@@ -3,6 +3,8 @@
 */
 resource "aws_security_group" "docker_agent_sg" {
 
+  description = "Base security for the Docker Agent (incoming SSH and Ping, and outgoing HTTP/S)"
+
   ingress {
     from_port   = 22
     to_port     = 22
@@ -39,6 +41,8 @@ resource "aws_security_group" "docker_agent_sg" {
 }
 resource "aws_security_group" "ldap_sg" {
   name = "JMM_LDAP_sg"
+
+  description = "in & out on LDAP default port"
 
   #LDAP port
   egress {

@@ -3,6 +3,8 @@
 */
 resource "aws_security_group" "sg-jenkins" {
 
+  description = "Jenkins related access"
+
   ingress {
     from_port   = 80
     to_port     = 8080
