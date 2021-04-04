@@ -16,6 +16,9 @@ ansible_file="main_playbook.yml"
 #         exit
 # fi
 
+source ./get-github-token.sh
+
+
 start=`date +%s`
 
 export ANSIBLE_SSH_ARGS="-F /Users/jmm/work/captains_cbci_trad/work_data/ssh_config -o ControlMaster=auto -o ControlPersist=60s"

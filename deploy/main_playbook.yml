@@ -4,12 +4,12 @@
   roles:
     - common
 
-- hosts: docker_agent
-  vars:
-    jenkins_node_type: "agent_docker"
-  roles:
-    - agent_docker
-    - docker_ldap
+# - hosts: docker_agent
+#   vars:
+#     jenkins_node_type: "agent_docker"
+#   roles:
+#     - agent_docker
+#     - docker_ldap
 
 - hosts: jenkins
   roles:

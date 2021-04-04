@@ -92,3 +92,17 @@
   loop: "{{ default_plugins }}"
 
 # apply the configuration as code
+# to retrieve: fetch
+
+- name: Loading github API token
+  set_fact:
+    github_token: "{{ lookup('env','GITHUB_TOKEN') }}"
+
+- name: create the XML file
+  set_fact:
+    rendered_template: "{{ lookup('template', 'github_token.xml.j2') }}"
+
+- name: add the Github API token as a credential
+  ansible.builtin.shell: "echo '{{ rendered_template }}' | {{ CLI_command }} create-credentials-by-xml system::system::jenkins _ "
+  register: add_github_token
+  failed_when: add_github_token.rc > 1

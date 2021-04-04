@@ -32,3 +32,6 @@
 
 ## some commands
 * checking if the port is open: `nc -zv 10.0.1.64 22`
+
+* https://stackoverflow.com/questions/41424999/rendering-ansible-template-into-the-fact-variable
+* https://github.com/jenkinsci/github-branch-source-plugin/blob/master/docs/github-app.adoc
