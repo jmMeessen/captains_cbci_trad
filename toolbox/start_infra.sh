@@ -13,6 +13,13 @@ source ~/.ovhrc
 
 ./update_aws_token.sh
 
+LOCAL_HOSTFILE=../work_data/hostfile
+if [ -f "$LOCAL_HOSTFILE" ]; then
+    echo "$LOCAL_HOSTFILE exists."
+    rm $LOCAL_HOSTFILE
+fi
+
+
 cd ../terraform
 terraform init
 terraform validate

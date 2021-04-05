@@ -7,7 +7,9 @@ jump_host:
 
 target_hosts:
     hosts:
-        jenkins:
+        cjoc:
+            ansible_ssh_user: ubuntu
+        cm1:
             ansible_ssh_user: ubuntu
         docker_agent: 
             ansible_ssh_user: ubuntu

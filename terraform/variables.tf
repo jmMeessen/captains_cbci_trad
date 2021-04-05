@@ -33,9 +33,19 @@ variable "domain_name" {
   default     = "the-captains-shack.com"
 }
 
-variable "subdomain" {
+variable "jenkins_subdomain" {
   description = "the subdomain to add to domain_name"
   default     = "jenkins"
+}
+
+variable "cjoc_subdomain" {
+  description = "the CJOC subdomain to add to domain_name"
+  default     = "cjoc"
+}
+
+variable "cm1_subdomain" {
+  description = "the CM1 subdomain to add to domain_name"
+  default     = "cm1"
 }
 
 variable "internal_domain_name" {

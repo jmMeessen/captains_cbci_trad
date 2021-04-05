@@ -4,6 +4,7 @@ resource "local_file" "ssh_config" {
     {
       the_bastion_ip      = aws_eip.bastion.public_ip,
       the_cjoc_ip         = aws_instance.cjoc.private_ip
+      the_cm1_ip          = aws_instance.cm1.private_ip
       the_docker_agent_ip = aws_instance.docker_agent.private_ip
     }
   )
