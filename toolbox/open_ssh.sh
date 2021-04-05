@@ -9,15 +9,16 @@ cd "$(cd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null && pwd)" || return
 
 
 PS3='Please enter your choice: '
-options=("bastion" "jenkins" "docker_agent" "Quit")
+options=("bastion" "cjoc" "docker_agent" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
         "bastion")
             echo "Connecting to ${opt}"
             ssh -F ../work_data/ssh_config ${opt}
-            break            ;;
-        "jenkins")
+            break
+            ;;
+        "cjoc")
             echo "Connecting to ${opt}"
             ssh -F ../work_data/ssh_config ${opt}
             break

@@ -5,8 +5,8 @@ Host bastion
     StrictHostKeyChecking no
     UserKnownHostsFile ~/work/captains_cbci_trad/work_data/hostfile
 
-Host jenkins
-    HostName ${the_jenkins_ip}
+Host cjoc
+    HostName ${the_cjoc_ip}
     IdentityFile ~/.ssh/captains_cbci_trad
     User ubuntu 
     ProxyJump bastion

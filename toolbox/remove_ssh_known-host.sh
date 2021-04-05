@@ -9,4 +9,4 @@ cd "$(cd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null && pwd)" || return
 
 source ./gather_IPs.sh 
 
-ssh-keygen -R ${jenkins_ip}
+ssh-keygen -R ${cjoc_ip}

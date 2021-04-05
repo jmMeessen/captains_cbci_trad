@@ -11,10 +11,10 @@
 #     - agent_docker
 #     - docker_ldap
 
-- hosts: jenkins
+- hosts: jenkins #FIXME: change name
   roles:
     - java8_jdk
-    - jenkins
+    - jenkins #FIXME: change name
 
 # - hosts: jmm_cjoc
 

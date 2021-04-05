@@ -1,9 +1,9 @@
 /*
-  Jenkins Server
+  CJOC Server
 */
-resource "aws_security_group" "sg-jenkins" {
+resource "aws_security_group" "sg-cjoc" {
 
-  description = "Jenkins related access"
+  description = "CJOC related access"
 
   ingress {
     from_port   = 80
@@ -48,23 +48,23 @@ resource "aws_security_group" "sg-jenkins" {
   vpc_id = aws_vpc.jmm-aws-vpc.id
 
   tags = {
-    Name       = "jenkinsSG"
+    Name       = "cjocSG"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }
 }
 
-resource "aws_instance" "jenkins" {
+resource "aws_instance" "cjoc" {
   ami                    = data.aws_ami.ubuntu.id
   availability_zone      = var.aws_availability_zone
   instance_type          = "m1.medium"
   key_name               = aws_key_pair.my-aws-key.key_name
-  vpc_security_group_ids = [aws_security_group.sg-jenkins.id]
+  vpc_security_group_ids = [aws_security_group.sg-cjoc.id]
   subnet_id              = aws_subnet.private_subnet.id
   source_dest_check      = false
 
   tags = {
-    Name       = "Jenkins server"
+    Name       = "CJOC VM"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }

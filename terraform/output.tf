@@ -6,12 +6,12 @@ output "bastion_dns" {
   value = aws_eip.bastion.public_dns
 }
 
-output "jenkins_ip" {
-  value = aws_instance.jenkins.private_ip
+output "cjoc_ip" {
+  value = aws_instance.cjoc.private_ip
 }
 
-output "jenkins_dns" {
-  value = aws_instance.jenkins.private_dns
+output "cjoc_dns" {
+  value = aws_instance.cjoc.private_dns
 }
 
 output "docker_agent_ip" {

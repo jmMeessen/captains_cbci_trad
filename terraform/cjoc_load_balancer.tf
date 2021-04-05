@@ -1,14 +1,14 @@
-//Define and configure a load balancer pointing to the jenkins machine 
+//Define and configure a load balancer pointing to the CJOC machine 
 //and update the DNS record
 
 
-resource "aws_lb" "loadblancer-1" {
+resource "aws_lb" "cjoc-lb" {
 
   load_balancer_type = "network"
   subnets            = [aws_subnet.public_subnet.id]
 
   tags = {
-    Name       = "Jmm LoadBalancer 1"
+    Name       = "Jmm LoadBalancer 1 (CJOC)"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }
@@ -24,7 +24,7 @@ variable "ports" {
 
 resource "aws_lb_listener" "lb1-listener" {
 
-  load_balancer_arn = aws_lb.loadblancer-1.arn
+  load_balancer_arn = aws_lb.cjoc-lb.arn
 
   protocol = "TCP"
   port     = 80
@@ -43,7 +43,7 @@ resource "aws_lb_target_group" "target_group" {
   target_type = "ip"
 
   depends_on = [
-    aws_lb.loadblancer-1
+    aws_lb.cjoc-lb
   ]
 
   lifecycle {
@@ -54,21 +54,21 @@ resource "aws_lb_target_group" "target_group" {
 resource "aws_lb_target_group_attachment" "target_group-attachment" {
 
   target_group_arn = aws_lb_target_group.target_group.arn
-  target_id        = aws_instance.jenkins.private_ip
+  target_id        = aws_instance.cjoc.private_ip
   port             = 8080
 }
 
 
 output "load_balancer_dns" {
-  value = aws_lb.loadblancer-1.dns_name
+  value = aws_lb.cjoc-lb.dns_name
 }
 
 
-//Point jenkins.the-captains-shack.com to the load balancer
-resource "ovh_domain_zone_record" "jenkins" {
+//Point CJOC.the-captains-shack.com to the load balancer
+resource "ovh_domain_zone_record" "cjoc" {
   zone      = var.domain_name
   subdomain = var.subdomain
   fieldtype = "CNAME"
   ttl       = "30"
-  target    = "${aws_lb.loadblancer-1.dns_name}."
+  target    = "${aws_lb.cjoc-lb.dns_name}."
 }
