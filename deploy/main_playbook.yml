@@ -4,17 +4,17 @@
   roles:
     - common
 
-# - hosts: docker_agent
-#   vars:
-#     jenkins_node_type: "agent_docker"
-#   roles:
-#     - agent_docker
-#     - docker_ldap
+- hosts: docker_agent
+  vars:
+    jenkins_node_type: "agent_docker"
+  roles:
+    - agent_docker
+    - docker_ldap
 
-- hosts: jenkins #FIXME: change name
+- hosts: cjoc 
   roles:
     - java8_jdk
-    - jenkins #FIXME: change name
+#    - jenkins #FIXME: change name
 
 # - hosts: jmm_cjoc
 

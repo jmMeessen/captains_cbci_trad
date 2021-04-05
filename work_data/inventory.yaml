@@ -11,6 +11,8 @@ target_hosts:
             ansible_ssh_user: ubuntu
         cm1:
             ansible_ssh_user: ubuntu
+        agent_1: 
+            ansible_ssh_user: ubuntu
         docker_agent: 
             ansible_ssh_user: ubuntu
 
