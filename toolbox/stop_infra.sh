@@ -15,10 +15,26 @@ start=`date +%s`
 
 cd ../terraform
 terraform destroy -auto-approve
-set +e
-rm terraform.tfstate
-rm ../work_data/ssh_config
-rm ../work_data/hostfile
+
+#set +e
+FILE=terraform.tfstate
+if [ -f "$FILE" ]; then
+    echo "deleting $FILE."
+    rm $FILE
+fi
+
+FILE=../work_data/ssh_config
+if [ -f "$FILE" ]; then
+    echo "deleting $FILE."
+    rm $FILE
+fi
+
+FILE=../work_data/hostfile
+if [ -f "$FILE" ]; then
+    echo "deleting $FILE."
+    rm $FILE
+fi
+
 cd - 
 
 end=`date +%s`

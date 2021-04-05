@@ -28,3 +28,11 @@ Host docker_agent
     ProxyJump bastion
     StrictHostKeyChecking no
     UserKnownHostsFile ~/work/captains_cbci_trad/work_data/hostfile
+
+Host agent_1
+    HostName ${the_agent1_ip}
+    IdentityFile ~/.ssh/captains_cbci_trad
+    User ubuntu 
+    ProxyJump bastion
+    StrictHostKeyChecking no
+    UserKnownHostsFile ~/work/captains_cbci_trad/work_data/hostfile
