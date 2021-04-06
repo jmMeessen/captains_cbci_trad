@@ -1,3 +1,5 @@
+ServerAliveInterval 120
+
 Host bastion
     HostName ${the_bastion_ip}
     User ubuntu
