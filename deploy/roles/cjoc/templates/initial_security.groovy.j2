@@ -1,0 +1,57 @@
+#!groovy
+
+import jenkins.model.*
+import hudson.security.*
+import jenkins.install.InstallState
+import hudson.security.csrf.DefaultCrumbIssuer
+import jenkins.model.Jenkins
+import jenkins.model.JenkinsLocationConfiguration
+import org.kohsuke.stapler.StaplerProxy
+import jenkins.security.s2m.AdminWhitelistRule
+import java.util.logging.Logger
+
+Logger logger = Logger.getLogger("000-initial_security.groovy")
+
+logger.info("-----> Configure initial user <-----")
+
+def instance = Jenkins.getInstance()
+def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+def users = hudsonRealm.getAllUsers()
+users_s = users.collect { it.toString() }
+
+// Create the admin user account if it doesn't already exist.
+if ("admin" in users_s) {
+    logger.info("         Admin user already exists - updating password")
+
+    def user = hudson.model.User.get('admin');
+    def password = hudson.security.HudsonPrivateSecurityRealm.Details.fromPlainPassword('{{ jenkins_default_admin_password }}')
+    user.addProperty(password)
+    user.save()
+}
+else {
+    logger.info("         creating local admin user")
+
+    hudsonRealm.createAccount('admin', '{{ jenkins_default_admin_password }}')
+    instance.setSecurityRealm(hudsonRealm)
+
+    def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
+    strategy.setAllowAnonymousRead(false)
+    instance.setAuthorizationStrategy(strategy)
+    instance.save()
+}
+
+logger.info("-----> Configuring Remoting (JNLP4 only, no Remoting CLI) <-----")
+Jenkins.instance.agentProtocols = new HashSet<String>(["JNLP4-connect","OperationsCenter2"])
+Jenkins.instance.getExtensionList(StaplerProxy.class)
+    .get(AdminWhitelistRule.class)
+    .masterKillSwitch = false
+
+logger.info("-----> Checking the CSRF protection <-----")
+if (Jenkins.instance.crumbIssuer == null) {
+    println "CSRF protection is disabled, Enabling the default Crumb Issuer"
+    Jenkins.instance.crumbIssuer = new DefaultCrumbIssuer(true)
+}
+
+logger.info("-----> Configuring Quiet Period <-----")
+// We do not wait for anything
+Jenkins.instance.quietPeriod = 0

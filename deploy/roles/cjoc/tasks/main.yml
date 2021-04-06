@@ -55,14 +55,45 @@
     mode: "u=rwx,g=rx,o=rx"
 
 - name: Prepare everything to load the license on CJOC
-  include_tasks: 01_load-license.yml
+  include_tasks: 00_load-license.yml
 
-# - name: Load initial user creation and security settings
-#   include_tasks: initial_jenkins_config.yml
+- name: Load initial user creation and security settings
+  include_tasks: 01_initial_jenkins_config.yml
 
-# - name: configure Jenkins Configuration as Code
-#   include_tasks: JCasC.yml
-#   when: jenkins_node_type is search("master") 
+
+#
+# Restart server to load the properties and execute the initscripts
+#
+
+- name: restart the {{ package_name }} service 
+  become: true
+  service:
+    name: "{{ package_name }}"
+    state: restarted
+
+- name: wait for jenkins to be up
+  uri: 
+    url: "{{ cjoc_url }}/login" 
+    status_code: "200" 
+  register: result
+  until: result.status == 200
+  retries: 60
+  delay: 1
+
+
+#
+# Setup everything required to use the CLI
+#
+- name: Call configCLI playbook
+  include_tasks: 03-configCLI.yml
+
+
+# apply the scripted configuration
+
+- name: Install default plugins
+  ansible.builtin.command: "{{ CLI_command }} install-plugin {{ item }} -deploy"
+  loop: "{{ default_plugins }}"
+
 
 # # This will load the properties and execute the initscripts 
 # - name: restart the {{ package_name }} service 
