@@ -7,18 +7,28 @@ set -u              #fail script when a variable is uninitialised
 # For consistant processing, CD to the Toolbox directory
 cd "$(cd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null && pwd)" || return
 
+#Use the default playbook unless one is defined as parameter
 ansible_file="main_playbook.yml"
+if [ $# -eq 1 ]
+then
+    ansible_file=$1
+fi
 
-# use a default vlaue or the parameter
-# if [ $# -lt 1 ]
-# then
-#         echo "Usage : $0 ansibleFile in the deploy dir "
-#         exit
-# fi
+#  Check if the file we are supposed to use exist
+if [ ! -f ../deploy/${ansible_file} ]; then
+    echo "\"../deploy/${ansible_file}\" not found!"
+    exit
+fi
 
+echo "Executing ../deploy/${ansible_file}"
+
+#Retrieve the github token from the local keystore
 source ./get-github-token.sh
 
 
+#
+# Let's go
+#
 start=`date +%s`
 
 export ANSIBLE_SSH_ARGS="-F /Users/jmm/work/captains_cbci_trad/work_data/ssh_config -o ControlMaster=auto -o ControlPersist=60s"
