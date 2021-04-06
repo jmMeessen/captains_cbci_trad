@@ -1,0 +1,27 @@
+---
+
+- name: "initialize the instance ID with a known value"
+  become: true
+  copy:
+    src: "secret.key"
+    dest: "{{ jenkins_home_dir }}/secret.key"
+    force: yes
+    backup: yes
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_user }}"
+    mode: u=rw,g=r,o=r
+
+- name: Load encrypted license key and certificate from disk
+  include_vars: "cjoc_license.yml"
+
+#this assumes that the `init.groovy.d` directory has been previously created
+- name: Update the licence loading groovy and copy it to the target directory
+  become: true
+  template: 
+    src: "license.groovy.j2"
+    dest: "{{ jenkins_home_dir }}/init.groovy.d/001-license.groovy"
+    force: yes
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_user }}"
+    mode: u=rw,g=r,o=r   
+

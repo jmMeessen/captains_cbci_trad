@@ -1,0 +1,48 @@
+
+
+- hosts: cjoc 
+  roles:
+    - java8_jdk
+    - cjoc
+
+# - hosts: jmm_cjoc
+
+#   # this is required as only python3 is installed on Ubuntu AMI (Ansible fails otherwise)
+#   gather_facts: False
+
+#   vars:
+#     jenkins_node_type: "cjoc"
+#     ansible_python_interpreter: auto
+
+#   roles:
+#     - general
+#     - jenkins
+   
+
+
+# - hosts: jmm_client_master
+
+#   # this is required as only python3 is installed on Ubuntu AMI (Ansible fails otherwise)
+#   gather_facts: False
+
+#   vars:
+#     jenkins_node_type: "master"
+#     ansible_python_interpreter: auto
+
+#   roles:
+#     - general
+#     - jenkins  
+
+
+# - hosts: jmm_agent1
+
+#   # this is required as only python3 is installed on Ubuntu AMI (Ansible fails otherwise)
+  
+#   gather_facts: False
+
+#   vars:
+#     jenkins_node_type: "agent_jnlp"
+#     ansible_python_interpreter: auto
+
+#   roles:
+#     - agent_jnlp

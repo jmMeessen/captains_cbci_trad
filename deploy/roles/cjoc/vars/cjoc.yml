@@ -1,0 +1,38 @@
+option_friendly_name: "Cloudbees Core Operation Center"
+key_url: "https://downloads.cloudbees.com/cloudbees-core/traditional/operations-center/rolling/debian/cloudbees.com.key"
+repo_url: "deb https://downloads.cloudbees.com/cloudbees-core/traditional/operations-center/rolling/debian binary/"
+package_name: "cloudbees-core-oc"
+used_port: "8888"
+jenkins_user: "{{ package_name }}"
+jenkins_home_dir: "/var/lib/{{ package_name }}"
+dns_reference: "cjoc_dns"
+jenkins_cfgmgt_dir: "/home/ubuntu"
+jenkins_cfgmgt_ssh_key: "{{ jenkins_cfgmgt_dir }}/.ssh/jenkins_cfgMgr_key"
+jenkins_cfgmgt_script_dir: "{{ jenkins_cfgmgt_dir }}/jenkins_scripts"
+jenkins_cfgmgt_user: "Jenkins_cfg"
+sshd_port: "50001"
+#CLI_command: "ssh -i {{ jenkins_cfgmgt_ssh_key }} -l {{ jenkins_cfgmgt_user }} -p {{ sshd_port }} localhost"
+CLI_command: java -jar jenkins-cli.jar -s http://localhost:{{used_port}} -auth @./cfgAuthfile
+
+default_plugins:
+  - cloudbees-ssh-slaves
+  - cloudbees-ha
+  - cloudbees-update-center-plugin
+  - nectar-rbac
+  - ssh-credentials
+  - ldap
+  - operations-center-jnlp-controller
+  - cloudbees-support
+  - operations-center-updatecenter
+  - operations-center-rbac
+  - credentials-binding
+  - infradna-backup
+  - cloudbees-monitoring
+  - operations-center-sso
+  - script-security
+  - cloudbees-folders-plus
+  - operations-center-clusterops
+  - mailer
+  - antisamy-markup-formatter
+  - suppress-stack-trace
+  - configuration-as-code
