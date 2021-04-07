@@ -7,7 +7,7 @@
   #Proceeding this way is important so that the noWizard parameter works properly
 - name: Copy the initial configuration before first startup (CJOC)
   become: true
-  copy:
+  ansible.builtin.copy:
     src: "{{ package_name }}"
     dest: "/etc/default/{{ package_name }}"
     force: no
