@@ -4,9 +4,8 @@
 - name: "Include the 'CJOC' installation specific variables" 
   include_vars: "cjoc.yml"
 
-
-- name: Copy the initial configuration before first startup (CJOC)
   #Proceeding this way is important so that the noWizard parameter works properly
+- name: Copy the initial configuration before first startup (CJOC)
   become: true
   copy:
     src: "{{ package_name }}"
@@ -16,15 +15,6 @@
     owner: "root"
     group: "root"
     mode: u=rw,g=r,o=r
-
-
-# - name: Load the full DNS names of the Infra into variables
-#   set_fact:
-#     full_cjoc_dns_name: "{{ lookup('env','cjoc_dns') }}"
-#     full_cm_dns_name: "{{ lookup('env','cm_dns') }}"
-#     full_agent1_dns_name: "{{ lookup('env','agent1_dns') }}"
-#     full_agent_docker_dns_name: "{{ lookup('env','agent_docker_dns') }}"
-
 
 - name: Add the {{ option_friendly_name }} APT Key
   become: true
@@ -85,7 +75,7 @@
 # Setup everything required to use the CLI
 #
 - name: Call configCLI playbook
-  include_tasks: 03-configCLI.yml
+  include_tasks: 02_configCLI.yml
 
 
 # apply the scripted configuration
@@ -94,139 +84,10 @@
   ansible.builtin.command: "{{ CLI_command }} install-plugin {{ item }} -deploy"
   loop: "{{ default_plugins }}"
 
-
-# # This will load the properties and execute the initscripts 
-# - name: restart the {{ package_name }} service 
-#   become: true
-#   service:
-#     name: "{{ package_name }}"
-#     state: restarted
-
-
-# #We do not specify the controler (wildcard) as the name is not stable on EC2
-# - name: redirect the traffic from 80 to {{ used_port }} with IPtables
-#   become: yes
-#   iptables:
-#     table: nat
-#     chain: PREROUTING
-#     protocol: tcp
-#     match: tcp
-#     destination_port: "80"
-#     jump: REDIRECT
-#     to_ports: "{{ used_port }}"
-#     comment: "Redirect web traffic to port {{ used_port }}"
-
-# - name: "wait for the port {{ used_port }} to be available"
-#   wait_for: 
-#     port: "{{ used_port }}" 
-#     delay: 10
-
-# # url /instance-identity doesn't work with client master
-# - name: wait for jenkins to be up
-#   uri: 
-#     url: "http://localhost:{{ used_port }}/login" 
-#     status_code: "200" 
-#   register: result
-#   until: result.status == 200
-#   retries: 60
-#   delay: 1
-
-# - name: register the Jenkins SSH server public key in the known_hosts file
-#   shell: "ssh-keyscan -t rsa,dsa -p {{ sshd_port }} localhost > ~/.ssh/known_hosts"
-
-# #FIXME: 
-# - name: Create a CLI command varialble on remote (for debug purposes)
-#   template:
-#     src: "remote_CLI_config.j2"
-#     dest: "{{jenkins_cfgmgt_dir}}/load_CLI_command.sh"
-#     force: yes
-#     mode: u=rwx,g=rx,o=rx
-
-# #FIXME:
-# - name: Copy a README to explain how to use the CLI command
-#   copy:
-#     src: "remote-CLI-readme.txt"
-#     dest: "{{jenkins_cfgmgt_dir}}/CLI_README.txt"
-#     force: yes
-#     mode: u=rwx,g=rx,o=rx    
-
-#   #  12  java -jar jenkins-cli.jar -s http://localhost:8888 -auth @./authfile
-
-# # NOTE: doesn't work correctly on Client Master
-# - name: copy jenkins-cli.jar to cfgMgt directory
-#   get_url:
-#     url: "http://localhost:{{ used_port }}/jnlpJars/jenkins-cli.jar"
-#     dest: "{{jenkins_cfgmgt_dir}}/jenkins-cli.jar"
-#   ignore_errors: yes  
-
-# # NOTE: doesn't work correctly on Client Master
-# - name: copy jenkins-cli.jar to cfgMgt directory
-#   get_url:
-#     url: "http://{{ full_cjoc_dns_name }}/jnlpJars/jenkins-cli.jar"
-#     dest: "{{ jenkins_cfgmgt_dir }}/jenkins-cli.jar"
-#   ignore_errors: yes  
-
-# - name: "create \"{{ jenkins_cfgmgt_script_dir }}\" to store the script executed by these scripts"
-#   file:
-#     path: "{{ jenkins_cfgmgt_script_dir }}"
-#     state: directory
-#     mode: u=rwx,g=rx,o=rx
-
-# #FIXME: remove me
-# - name: "Check if port {{ sshd_port }} (Jenkins CLI SSH server) is accessible from current host"
-#   wait_for:
-#     port: "{{ sshd_port }}"
-#     state: started         # Port should be open
-#     delay: 0               # No wait before first check (sec)
-#     timeout: 60            # Stop checking after timeout (sec)
-#   ignore_errors: yes    
-
-# - name: "Copy cfg token"
-#   become: true
-#   copy:
-#     src: "{{jenkins_home_dir}}/secrets/defaultCfgToken"
-#     remote_src: yes
-#     dest: "{{jenkins_cfgmgt_dir}}/cfgAuthfile"
-#     force: yes
-#     mode: u=rw,g=r,o=r   
-
-# - name: Install default plugins
-#   shell: "{{ CLI_command }} install-plugin {{item}} -deploy"
-#   loop: "{{ default_plugins }}"
-
-# - name: create the Client Master
-#   include_tasks: create-client-master.yml
-#   when: jenkins_node_type is search("cjoc")
+- name: create the Client Master
+  include_tasks: 03_create-client-master.yml
 
 # - name: copy plugin catalogs
 #   include_tasks: plugin-catalog.yml
 #   when: jenkins_node_type is search("cjoc")
-
-# - name: configure Jenkins Configuration as Code
-#   include_tasks: JCasC.yml
-#   when: jenkins_node_type is search("master")
-
-# - name: copy the JCasC configuration file
-#   become: true
-#   copy:
-#     src: "JCasC-agents.yml"
-#     dest: "/var/lib/{{ jenkins_user }}/cfgAsCode/JCasC-agents.yml"
-#     force: yes
-#     owner: "{{ jenkins_user }}"
-#     group: "{{ jenkins_user }}"
-#     mode: u=rw,g=r,o=r
-#   when: jenkins_node_type is search("master")
-
-# - name: load the configuration
-#   shell: "{{ CLI_command }} reload-jcasc-configuration"
-#   when: jenkins_node_type is search("master")
-
-# - name: Generate the JNLP startup file
-#   include_tasks: jnlp_startup.yml
-#   when: jenkins_node_type is search("master")
-
-# - name: Copy the LDAP JCasC configuration
-#   include_tasks: JCasC_LDAP.yml
-#   when: jenkins_node_type is search("master")
-
 

@@ -23,7 +23,7 @@
 
 - name: copy jenkins-cli.jar to cfgMgt directory
   get_url:
-    url: "{{ jenkins_url }}/jnlpJars/jenkins-cli.jar"
+    url: "{{ cjoc_url }}/jnlpJars/jenkins-cli.jar"
     dest: "{{ jenkins_cfgmgt_dir }}/jenkins-cli.jar"
     timeout: 120
   ignore_errors: yes  
@@ -41,3 +41,10 @@
     dest: "{{ jenkins_cfgmgt_dir }}/CLI_README.txt"
     force: yes
     mode: u=rwx,g=rx,o=rx    
+
+
+- name: "create \"{{ jenkins_cfgmgt_script_dir }}\" to store the script executed by these scripts"
+  file:
+    path: "{{ jenkins_cfgmgt_script_dir }}"
+    state: directory
+    mode: u=rwx,g=rx,o=rx
