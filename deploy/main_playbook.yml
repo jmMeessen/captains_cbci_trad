@@ -14,21 +14,9 @@
 - hosts: cjoc 
   roles:
     - java8_jdk
-#    - jenkins #FIXME: change name
+    - cjoc
 
-# - hosts: jmm_cjoc
 
-#   # this is required as only python3 is installed on Ubuntu AMI (Ansible fails otherwise)
-#   gather_facts: False
-
-#   vars:
-#     jenkins_node_type: "cjoc"
-#     ansible_python_interpreter: auto
-
-#   roles:
-#     - general
-#     - jenkins
-   
 
 
 # - hosts: jmm_client_master
