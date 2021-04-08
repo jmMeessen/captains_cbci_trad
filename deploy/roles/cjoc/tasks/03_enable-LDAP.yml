@@ -1,0 +1,23 @@
+---
+
+#load encrypted file with which contains the LDAP Manager password to fill the template
+- name: Load encrypted ldif passwords
+  include_vars: "../docker_ldap/vars/ldif_data.yml"
+
+- name: "Copy and setup script to configure LDAP"    
+  become: true
+  template: 
+    src: "setup_ldap.groovy.j2"
+    dest: "{{ jenkins_cfgmgt_script_dir }}/setup_ldap.groovy"
+    force: yes
+    mode: u=rw,g=r,o=r    
+
+- name: Execute the LDAP setup script
+  ansible.builtin.shell: "cat {{ jenkins_cfgmgt_script_dir }}/setup_ldap.groovy | {{ CLI_command }} groovy ="
+  register: output
+
+- name: Output of Script execution
+  debug: 
+    var: output.stdout
+
+## IRL it would be a good idea to delete this file as it contains the password to the LDAP

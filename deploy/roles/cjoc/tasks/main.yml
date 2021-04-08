@@ -35,6 +35,13 @@
     update_cache: yes
     name: "{{ package_name }}"
 
+- name: Install ldap-utils (test the LDAP)
+  become: true
+  apt:
+    name: "ldap-utils"
+    state: present
+    update_cache: yes
+
 - name: create the init.groovy.d directory
   become: true
   file:
@@ -84,8 +91,12 @@
   ansible.builtin.command: "{{ CLI_command }} install-plugin {{ item }} -deploy"
   loop: "{{ default_plugins }}"
 
+- name: Enable LDAP
+  # Now that the LDAP plugin is installed
+  include_tasks: 03_enable-LDAP.yml
+
 - name: create the Client Master
-  include_tasks: 03_create-client-master.yml
+  include_tasks: 04_create-client-master.yml
 
 # - name: copy plugin catalogs
 #   include_tasks: plugin-catalog.yml

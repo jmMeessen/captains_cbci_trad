@@ -14,8 +14,6 @@
     group: "{{ jenkins_user }}"
     mode: u=rw,g=r,o=r   
 
-
-
 - name: "copy the set-url-groovy to the target directory"
   become: true
   template: 
@@ -47,7 +45,7 @@
     group: "{{ jenkins_user }}"
     mode: u=rw,g=r,o=r  
 
-- name: "Copy init groovy script to request token generation"
+- name: "Create init script to request token generation"
   become: true
   copy:
     src: "generateToken.groovy"
@@ -56,6 +54,7 @@
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_user }}"
     mode: u=rw,g=r,o=r
+
 
 # #
 # # prepare to use Jenkins Configuration as Code

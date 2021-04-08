@@ -1,0 +1,44 @@
+/*
+    Configure a single LDAP server in the LDAP plugin security realm.
+ */
+
+import jenkins.*
+import hudson.*
+import com.cloudbees.plugins.credentials.*
+import com.cloudbees.plugins.credentials.common.*
+import com.cloudbees.plugins.credentials.domains.*
+import com.cloudbees.jenkins.plugins.sshcredentials.impl.*
+import hudson.plugins.sshslaves.*;
+import hudson.model.*
+import jenkins.model.*
+import hudson.security.*
+import java.util.logging.Logger
+
+Logger logger = Logger.getLogger("007-setup_ldap.groovy")
+logger.info("-----> configure LDAP  <-----")
+
+def instance = Jenkins.getInstance()
+
+if(!(Jenkins.instance.securityRealm instanceof LDAPSecurityRealm)) {
+    def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+    //  sample LDAP setup
+    String server = 'ldap://ldap.the-captains-shack.internal:389'
+    String rootDN = 'dc=example,dc=com'
+    String userSearchBase = ''
+    String userSearch = 'uid={0}'
+    String groupSearchBase = ''
+    String managerDN = 'uid=idm,ou=Administrators,dc=example,dc=com'
+    String passcode = '{{ ldap_admin_passw }}'
+    boolean inhibitInferRootDN = false
+    SecurityRealm ldap_realm = new LDAPSecurityRealm(server, rootDN, userSearchBase, userSearch, groupSearchBase, managerDN, passcode, inhibitInferRootDN) 
+    instance.setSecurityRealm(ldap_realm)
+    instance.save()
+
+    println 'Security realm set to LDAP.'
+    logger.info("       Security realm set to LDAP.")
+}
+else {
+    println 'Nothing changed.  LDAP security realm already configured.'
+    logger.info("       Nothing changed.  LDAP security realm already configured.")
+}
+//ldapsearch -LLL -H ldap://localhost:389 -D uid=idm,ou=Administrators,dc=example,dc=com -w mySecret -x -bdc=example,dc=com uid=dev1

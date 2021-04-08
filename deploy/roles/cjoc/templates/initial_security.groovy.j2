@@ -15,30 +15,38 @@ Logger logger = Logger.getLogger("000-initial_security.groovy")
 logger.info("-----> Configure initial user <-----")
 
 def instance = Jenkins.getInstance()
-def hudsonRealm = new HudsonPrivateSecurityRealm(false)
-def users = hudsonRealm.getAllUsers()
-users_s = users.collect { it.toString() }
 
-// Create the admin user account if it doesn't already exist.
-if ("admin" in users_s) {
-    logger.info("         Admin user already exists - updating password")
+//if(!(Jenkins.instance.securityRealm instanceof LDAPSecurityRealm)) {
 
-    def user = hudson.model.User.get('admin');
-    def password = hudson.security.HudsonPrivateSecurityRealm.Details.fromPlainPassword('{{ jenkins_default_admin_password }}')
-    user.addProperty(password)
-    user.save()
-}
-else {
-    logger.info("         creating local admin user")
+    def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+    def users = hudsonRealm.getAllUsers()
+    users_s = users.collect { it.toString() }
 
-    hudsonRealm.createAccount('admin', '{{ jenkins_default_admin_password }}')
-    instance.setSecurityRealm(hudsonRealm)
+    // Create the admin user account if it doesn't already exist.
+    if ("admin" in users_s) {
+        logger.info("         Admin user already exists - updating password")
 
-    def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
-    strategy.setAllowAnonymousRead(false)
-    instance.setAuthorizationStrategy(strategy)
-    instance.save()
-}
+        def user = hudson.model.User.get('admin');
+        def password = hudson.security.HudsonPrivateSecurityRealm.Details.fromPlainPassword('{{ jenkins_default_admin_password }}')
+        user.addProperty(password)
+        user.save()
+    }
+    else {
+        logger.info("         creating local admin user")
+
+        hudsonRealm.createAccount('admin', '{{ jenkins_default_admin_password }}')
+        instance.setSecurityRealm(hudsonRealm)
+
+        def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
+        strategy.setAllowAnonymousRead(false)
+        instance.setAuthorizationStrategy(strategy)
+        instance.save()
+    }
+//}
+//else {
+//    logger.info("         Skipping: LDAP already configured")
+//
+//}
 
 logger.info("-----> Configuring Remoting (JNLP4 only, no Remoting CLI) <-----")
 Jenkins.instance.agentProtocols = new HashSet<String>(["JNLP4-connect","OperationsCenter2"])

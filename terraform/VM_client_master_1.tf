@@ -59,7 +59,7 @@ resource "aws_instance" "cm1" {
   availability_zone      = var.aws_availability_zone
   instance_type          = "m1.medium"
   key_name               = aws_key_pair.my-aws-key.key_name
-  vpc_security_group_ids = [aws_security_group.sg-cm.id]
+  vpc_security_group_ids = [aws_security_group.sg-cm.id, aws_security_group.ldap_sg.id]
   subnet_id              = aws_subnet.private_subnet.id
   source_dest_check      = false
 

@@ -36,3 +36,32 @@ resource "aws_security_group" "agent_sg" {
     "cb:owner" = "user:Jmm"
   }
 }
+
+resource "aws_security_group" "ldap_sg" {
+  name = "JMM_LDAP_sg"
+
+  description = "in & out on LDAP default port"
+
+  #LDAP port
+  egress {
+    from_port   = 389
+    to_port     = 389
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_cidr]
+  }
+
+  ingress {
+    from_port   = 389
+    to_port     = 389
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_cidr]
+  }
+
+  vpc_id = aws_vpc.jmm-aws-vpc.id
+
+  tags = {
+    Name       = "ldapSG"
+    Owner      = "Jmm"
+    "cb:owner" = "user:Jmm"
+  }
+}

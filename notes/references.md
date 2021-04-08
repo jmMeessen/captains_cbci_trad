@@ -23,7 +23,18 @@
 
 * https://dzone.com/articles/speed-up-ansible 
 
-```
+## Configure LDAP
+* https://github.com/samrocketman/jenkins-bootstrap-shared/blob/main/scripts/configure-ldap-settings.groovy
+* https://gist.github.com/zouzias/bf447ab020955ac70db5db5521c3d5b9
+* https://stackoverflow.com/questions/46993653/ldap-groovy-script-runs-successfully-but-no-changes
+* https://stackoverflow.com/questions/51250127/setting-up-of-ldapconfiguration-enviromental-properties-in-jenkins-using-groovy
+* [Configure LDAP Authorization with Groovy](https://issues.jenkins.io/browse/JENKINS-29733)
+* https://github.com/dennyzhang/cheatsheet-jenkins-groovy-A4/blob/master/enable-ldap.groovy
+* https://github.com/dennyzhang/cheatsheet-jenkins-groovy-A4/blob/master/cheatsheet-jenkins-groovy-A4.pdf
+* https://plugins.jenkins.io/ldap/ 
+* https://github.com/hayderimran7/useful-jenkins-groovy-init-scripts
+* https://stackoverflow.com/questions/35654286/how-to-check-if-a-file-exists-in-ansible
+
 
 
 ## DNS redirection to load balancer
