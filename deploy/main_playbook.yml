@@ -16,7 +16,10 @@
     - java8_jdk
     - cjoc
 
-
+- hosts: cm1 
+  roles:
+    - java8_jdk
+    - client_master
 
 
 # - hosts: jmm_client_master

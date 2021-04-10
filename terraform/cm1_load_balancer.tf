@@ -4,6 +4,7 @@
 
 resource "aws_lb" "cm1_lb" {
 
+  name               = "Jmm-cm1-lb"
   load_balancer_type = "network"
   subnets            = [aws_subnet.public_subnet.id]
 
@@ -49,7 +50,6 @@ resource "aws_lb_target_group_attachment" "target_group_attachment_cm1" {
   target_id        = aws_instance.cm1.private_ip
   port             = 8080
 }
-
 
 output "cm1_load_balancer_dns" {
   value = aws_lb.cm1_lb.dns_name

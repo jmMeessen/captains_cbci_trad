@@ -1,9 +1,9 @@
 
 
-- hosts: cjoc 
+- hosts: cm1 
   roles:
     - java8_jdk
-    - cjoc
+    - client_master
 
 
 # - hosts: jmm_agent1

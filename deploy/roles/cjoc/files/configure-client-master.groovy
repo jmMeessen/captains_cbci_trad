@@ -5,6 +5,7 @@ import com.cloudbees.opscenter.server.model.ClientMaster
 import com.cloudbees.opscenter.server.model.ConnectedMaster
 import com.cloudbees.opscenter.server.model.OperationsCenter
 import com.cloudbees.opscenter.server.properties.ConnectedMasterLicenseServerProperty
+import com.cloudbees.opscenter.server.config.ConnectedMasterWebSocketProperty
 import jenkins.model.Jenkins
 import java.util.logging.Logger
 
@@ -32,6 +33,7 @@ if (jenkins.getItem(clientMasterName)==null){
 	cm.setIdName(ConnectedMaster.createIdName(clientMasterId, clientMasterName))
 	cm.setGrantId(clientMasterGrantId)
 	cm.getProperties().replace(new ConnectedMasterLicenseServerProperty(clientMasterLicenseStrategy))
+	cm.properties.push(new  ConnectedMasterWebSocketProperty(true))
 	cm.save()
 
 	if (OperationsCenter.instance.getConnectedMasterByName(cm.idName)!=null){

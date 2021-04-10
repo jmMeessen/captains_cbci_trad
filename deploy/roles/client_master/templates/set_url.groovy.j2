@@ -1,0 +1,28 @@
+#!groovy
+
+// imports
+import jenkins.model.Jenkins
+import jenkins.model.JenkinsLocationConfiguration
+import java.util.logging.Logger
+
+Logger logger = Logger.getLogger("set_url.groovy")
+
+logger.info("-----> Set Jenkin's URL <-----")
+
+// parameters
+def jenkinsParameters = [
+  email:  'Jmm\'s Jenkins Admin <jmeessen@cloudbees.com>',
+  url:    '{{ cm_url }}/'
+]
+
+// get Jenkins location configuration
+def jenkinsLocationConfiguration = JenkinsLocationConfiguration.get()
+
+// set Jenkins URL
+jenkinsLocationConfiguration.setUrl(jenkinsParameters.url)
+
+// set Jenkins admin email address
+jenkinsLocationConfiguration.setAdminAddress(jenkinsParameters.email)
+
+// save current Jenkins state to disk
+jenkinsLocationConfiguration.save()

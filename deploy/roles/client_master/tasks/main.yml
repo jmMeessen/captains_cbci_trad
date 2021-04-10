@@ -1,11 +1,11 @@
 ---
 
 #Jenkins_node_type is defined in the calling playbook
-- name: "Include the 'CJOC' installation specific variables" 
-  include_vars: "cjoc.yml"
+- name: "Include the 'Client Master #1' installation specific variables" 
+  include_vars: "master.yml"
 
+- name: Copy and update the initial configuration before first startup (Master)
   #Proceeding this way is important so that the noWizard parameter works properly
-- name: Copy the initial configuration before first startup (CJOC)
   become: true
   ansible.builtin.copy:
     src: "{{ package_name }}"
@@ -35,13 +35,6 @@
     update_cache: yes
     name: "{{ package_name }}"
 
-- name: Install ldap-utils (test the LDAP)
-  become: true
-  apt:
-    name: "ldap-utils"
-    state: present
-    update_cache: yes
-
 - name: create the init.groovy.d directory
   become: true
   file:
@@ -51,17 +44,14 @@
     group: "{{ jenkins_user }}"
     mode: "u=rwx,g=rx,o=rx"
 
-- name: Prepare everything to load the license on CJOC
-  include_tasks: 00_load-license.yml
-
 - name: Load initial user creation and security settings
   include_tasks: 01_initial_jenkins_config.yml
 
+# # FIXME:
+# - name: configure Jenkins Configuration as Code
+#   include_tasks: JCasC.yml
 
-#
-# Restart server to load the properties and execute the initscripts
-#
-
+# This will load the properties and execute the initscripts 
 - name: restart the {{ package_name }} service 
   become: true
   service:
@@ -70,7 +60,7 @@
 
 - name: wait for jenkins to be up
   uri: 
-    url: "{{ cjoc_url }}/login" 
+    url: "{{ cm_url }}/login" 
     status_code: "200" 
   register: result
   until: result.status == 200
@@ -84,24 +74,9 @@
 - name: Call configCLI playbook
   include_tasks: 02_configCLI.yml
 
-
 # apply the scripted configuration
 
 - name: Install default plugins
   ansible.builtin.command: "{{ CLI_command }} install-plugin {{ item }} -deploy"
   loop: "{{ default_plugins }}"
-
-- name: Enable LDAP
-  # Now that the LDAP plugin is installed, we can configure it
-  include_tasks: 03_enable-LDAP.yml
-
-- name: setup CJOC security
-  include: 04_setup_CJOC_security.yml
-
-- name: create the Client Master
-  include_tasks: 05_create-client-master.yml
-
-# - name: copy plugin catalogs
-#   include_tasks: plugin-catalog.yml
-#   when: jenkins_node_type is search("cjoc")
 

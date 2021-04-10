@@ -1,0 +1,47 @@
+option_friendly_name: "Cloudbees Core Client Master"
+key_url: "https://downloads.cloudbees.com/cloudbees-core/traditional/client-master/rolling/debian/cloudbees.com.key"
+repo_url: "deb https://downloads.cloudbees.com/cloudbees-core/traditional/client-master/rolling/debian binary/"
+package_name: "cloudbees-core-cm"
+used_port: "8080"
+jenkins_user: "{{ package_name }}"
+jenkins_home_dir: "/var/lib/{{ package_name }}"
+jenkins_cfgmgt_dir: "/home/ubuntu/ConfigMgt"
+jenkins_cfgmgt_script_dir: "{{ jenkins_cfgmgt_dir }}/jenkins_scripts"
+jenkins_cfgmgt_user: "Jenkins_cfg"
+cm_url: "http://cm1.the-captains-shack.com"
+CLI_command: java -jar {{ jenkins_cfgmgt_dir }}/jenkins-cli.jar -s {{ cm_url }} -auth @{{ jenkins_cfgmgt_dir }}/cfgAuthfile
+
+default_plugins:
+  - pipeline-model-definition
+  - operations-center-cloud
+  - cloudbees-support
+  - cloudbees-jsync-archiver
+  - cloudbees-workflow-template
+  - pipeline-stage-view
+  - ssh-credentials
+  - git-client
+  - cloudbees-nodes-plus
+  - infradna-backup
+  - cloudbees-monitoring
+  - cloudbees-template
+  - workflow-cps-checkpoint
+  - nectar-rbac
+  - credentials-binding
+  - github-branch-source
+  - cloudbees-ssh-slaves
+  - cloudbees-folders-plus
+  - cloudbees-groovy-view
+  - email-ext
+  - cloudbees-workflow-ui
+  - wikitext
+  - scm-api
+  - gradle
+  - cloudbees-ha
+  - cloudbees-view-creation-filter
+  - mailer
+  - workflow-aggregator
+  - ldap
+  - git
+  - configuration-as-code
+  - kubernetes
+  - blueocean

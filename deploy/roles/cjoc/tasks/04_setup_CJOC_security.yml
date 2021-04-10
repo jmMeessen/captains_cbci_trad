@@ -1,0 +1,11 @@
+---
+
+- name: copy creation groovy script to the target server
+  copy:
+    src: "configure-client-master.groovy"
+    dest: "{{ jenkins_cfgmgt_script_dir }}/setCJOCsecurity.groovy"
+    force: yes
+    mode: u=rw,g=r,o=r
+
+- name: Execute Client Master creation script
+  ansible.builtin.shell: "cat {{ jenkins_cfgmgt_script_dir }}/setCJOCsecurity.groovy | {{ CLI_command }} groovy ="
