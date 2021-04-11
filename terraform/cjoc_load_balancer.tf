@@ -4,7 +4,7 @@
 
 resource "aws_lb" "cjoc_lb" {
 
-  name = "Jmm-cjoc-lb"
+  name               = "Jmm-cjoc-lb"
   load_balancer_type = "network"
   subnets            = [aws_subnet.public_subnet.id]
 

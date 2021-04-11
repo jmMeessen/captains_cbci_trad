@@ -96,7 +96,7 @@
   include_tasks: 03_enable-LDAP.yml
 
 - name: setup CJOC security
-  include: 04_setup_CJOC_security.yml
+  include_tasks: 04_setup_CJOC_security.yml
 
 - name: create the Client Master
   include_tasks: 05_create-client-master.yml
