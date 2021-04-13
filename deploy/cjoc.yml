@@ -4,6 +4,7 @@
   roles:
     - java8_jdk
     - cjoc
+    - ldap_tester
 
 
 # - hosts: jmm_agent1

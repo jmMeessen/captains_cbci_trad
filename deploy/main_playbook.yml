@@ -15,11 +15,13 @@
   roles:
     - java8_jdk
     - cjoc
+    - ldap_tester
 
 - hosts: cm1 
   roles:
     - java8_jdk
     - client_master
+    - ldap_tester    
 
 
 # - hosts: jmm_client_master

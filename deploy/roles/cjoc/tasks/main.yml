@@ -35,13 +35,6 @@
     update_cache: yes
     name: "{{ package_name }}"
 
-- name: Install ldap-utils (test the LDAP)
-  become: true
-  apt:
-    name: "ldap-utils"
-    state: present
-    update_cache: yes
-
 - name: create the init.groovy.d directory
   become: true
   file:

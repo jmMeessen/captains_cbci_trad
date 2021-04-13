@@ -1,0 +1,21 @@
+---
+
+#load encrypted file with which contains the LDAP Manager password to fill the template
+- name: Load encrypted ldif passwords
+  include_vars: "../docker_ldap/vars/ldif_data.yml"
+  
+- name: copy ldap test script
+  become: yes
+  template: 
+    src: "test_ldap.sh.j2"
+    dest: "test_ldap.sh"
+    force: yes
+    backup: yes
+    mode: u=rwx,g=rx,o=rx
+
+- name: Install ldap-utils (test the LDAP)
+  become: true
+  apt:
+    name: "ldap-utils"
+    state: present
+    update_cache: yes
