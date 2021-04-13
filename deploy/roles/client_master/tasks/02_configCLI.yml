@@ -23,10 +23,17 @@
 
 - name: copy jenkins-cli.jar to cfgMgt directory
   get_url:
-    url: "http://cjoc.the-captains-shack.com/jnlpJars/jenkins-cli.jar"
+    url: "{{ cm_url }}/jnlpJars/jenkins-cli.jar"
     dest: "{{ jenkins_cfgmgt_dir }}/jenkins-cli.jar"
     timeout: 120
-  ignore_errors: yes  
+  register: result
+  until: result.failed == false
+  retries: 5
+  delay: 10
+
+# - name: Output of Script execution
+#   debug: 
+#     var: result
 
 - name: Create a CLI command varialble on remote (for debug purposes)
   template:

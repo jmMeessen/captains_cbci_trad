@@ -31,5 +31,4 @@ default_plugins:
   - operations-center-clusterops
   - mailer
   - antisamy-markup-formatter
-  - suppress-stack-trace
   - configuration-as-code
