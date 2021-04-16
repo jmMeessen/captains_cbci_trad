@@ -1,0 +1,70 @@
+Amazon Web Services SDK (aws-java-sdk): 1.11.976
+Apache HttpComponents Client 4.x API Plugin (apache-httpcomponents-client-4-api): 4.5.13-1.0
+Async Http Client (async-http-client): 1.7.24.3
+Beekeeper Upgrade Assistant Plugin (cloudbees-assurance): 2.276.0.2
+Bootstrap 4 API Plugin (bootstrap4-api): 4.6.0-2
+bouncycastle API Plugin (bouncycastle-api): 2.20
+Checks API plugin (checks-api): 1.6.1
+CloudBees Administrative Monitors Plugin (cloudbees-administrative-monitors): 1.0.1
+CloudBees Analytics Plugin (cloudbees-analytics): 1.28
+CloudBees AWS Credentials Plugin (aws-credentials): 1.28.1
+CloudBees Backup Plugin (infradna-backup): 3.38.33
+CloudBees CasC Server Plugin (cloudbees-casc-server): 1.0
+CloudBees Folders Plus Plugin (cloudbees-folders-plus): 3.12
+CloudBees High Availability Management plugin (cloudbees-ha): 4.27
+CloudBees Jenkins Enterprise License Entitlement Check (nectar-license): 8.30
+CloudBees License Manager (cloudbees-license): 9.53
+CloudBees Monitoring Plugin (cloudbees-monitoring): 2.11
+CloudBees Platform Common Plugin (cloudbees-platform-common): 1.5
+CloudBees Role-Based Access Control Plugin (nectar-rbac): 5.56
+CloudBees SSH Build Agents Plugin (cloudbees-ssh-slaves): 2.9
+CloudBees Support Plugin (cloudbees-support): 3.26
+CloudBees Unified UI Plugin (cloudbees-unified-ui): 1.5
+CloudBees Update Center Data API (cloudbees-uc-data-api): 4.43
+CloudBees Update Center Plugin (cloudbees-update-center-plugin): 4.52
+Command Agent Launcher Plugin (command-launcher): 1.5
+Credentials Binding Plugin (credentials-binding): 1.24
+Credentials Plugin (credentials): 2.3.15
+Display URL API (display-url-api): 2.3.4
+ECharts API Plugin (echarts-api): 5.0.1-1
+Folders Plugin (cloudbees-folder): 6.15
+Font Awesome API Plugin (font-awesome-api): 5.15.2-2
+Health Advisor by CloudBees (cloudbees-jenkins-advisor): 3.2.4
+Jackson 2 API Plugin (jackson2-api): 2.12.1
+Java JSON Web Token (JJWT) Plugin (jjwt-api): 0.11.2-5.143e44951c52
+JAXB plugin (jaxb): 2.3.0.1
+JQuery3 API Plugin (jquery3-api): 3.5.1-3
+JUnit Plugin (junit): 1.48
+LDAP Plugin (ldap): 2.4
+Mailer Plugin (mailer): 1.34
+MapDB API Plugin (mapdb-api): 1.0.9.0
+Metrics Plugin (metrics): 4.0.2.7
+Node Iterator API Plugin (node-iterator-api): 1.5.0
+OkHttp Plugin (okhttp-api): 3.14.9
+Operations Center Agent (operations-center-agent): 2.277.0.1
+Operations Center Context (operations-center-context): 2.277.0.1
+Operations Center JNLP Agent Controller Plugin (operations-center-jnlp-controller): 2.277.0.1
+Operations Center Monitoring Plugin (operations-center-monitoring): 2.277.0.1
+Operations Center Server Cluster Operations (operations-center-clusterops): 2.277.0.2
+Operations Center Server License Entitlement Check (operations-center-license): 2.277.0.1
+Operations Center Server Plugin (operations-center-server): 2.277.0.4
+Operations Center Server Role Based Access Control (operations-center-rbac): 2.277.0.2
+Operations Center Single Sign-On Plugin (operations-center-sso): 2.277.0.1
+Operations Center Update Center Plugin (operations-center-updatecenter): 2.277.0.1
+Oracle Java SE Development Kit Installer Plugin (jdk-tool): 1.5
+OWASP Markup Formatter Plugin (antisamy-markup-formatter): 2.1
+Pipeline: API (workflow-api): 2.41
+Pipeline: Step API (workflow-step-api): 2.23
+Pipeline: Supporting APIs (workflow-support): 3.8
+Plain Credentials Plugin (plain-credentials): 1.7
+Plugin Utilities API Plugin (plugin-util-api): 2.0.0
+Popper.js API Plugin (popper-api): 1.16.1-2
+SCM API Plugin (scm-api): 2.6.4
+Script Security Plugin (script-security): 1.76
+Snakeyaml API Plugin (snakeyaml-api): 1.27.0
+SSH Credentials Plugin (ssh-credentials): 1.18.1
+Structs Plugin (structs): 1.22
+Support Core Plugin (support-core): 2.72.1
+Token Macro Plugin (token-macro): 2.15
+Trilead API Plugin (trilead-api): 1.0.13
+Variant Plugin (variant): 1.4

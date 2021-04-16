@@ -1,0 +1,25 @@
+---
+
+#Jenkins_node_type is defined in the calling playbook
+- name: "Include the 'Client Master #1' installation specific variables" 
+  include_vars: "master.yml"
+
+
+- name: Add the {{ option_friendly_name }} APT Key
+  become: true
+  apt_key:
+    url: "{{ key_url }}"
+    state: present
+
+- name: Add the {{ option_friendly_name }} package repository
+  become: true
+  apt_repository:
+    repo: "{{ repo_url }}"
+    state: present
+
+# To force a particular version:  "{{ package_name }}=2.138.3.1"
+- name: Install {{ option_friendly_name }}
+  become: true
+  apt:
+    update_cache: yes
+    name: "{{ package_name }}"

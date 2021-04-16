@@ -45,6 +45,3 @@ default_plugins:
   - configuration-as-code
   - kubernetes
   - blueocean
-  - cloudbees-github-reporting
-  - cloudbees-jenkins-advisor
-  - lockable-resources

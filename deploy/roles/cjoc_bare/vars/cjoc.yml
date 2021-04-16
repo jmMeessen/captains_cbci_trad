@@ -31,5 +31,4 @@ default_plugins:
   - operations-center-clusterops
   - mailer
   - antisamy-markup-formatter
-  - cloudbees-jenkins-advisor
-  - operations-center-monitoring
+  - configuration-as-code
