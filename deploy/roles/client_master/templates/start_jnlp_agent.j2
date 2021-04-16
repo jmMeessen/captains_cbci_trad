@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+java -jar agent.jar -jnlpUrl {{ cm_url }}/computer/jnlp-agent/slave-agent.jnlp -secret {{ jnlp_secret.stdout }}
+
