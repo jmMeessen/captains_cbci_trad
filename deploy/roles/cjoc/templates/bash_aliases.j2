@@ -1,0 +1,7 @@
+alias goJenkins_home='cd {{ jenkins_home_dir }}'
+alias goLog_dir='cd /var/log/{{ jenkins_user }}'
+alias goConfig_dir='cd /etc/default/'
+
+alias jenkinsTail='tail -f -n 40  /var/log/{{ jenkins_user }}/{{ jenkins_user }}.log'
+alias jenkinsStop='sudo service {{ jenkins_user }} stop'
+alias jenkinsUp='sudo service {{ jenkins_user }} start'
