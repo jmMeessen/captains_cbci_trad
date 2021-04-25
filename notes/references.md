@@ -46,3 +46,8 @@
 
 * https://stackoverflow.com/questions/41424999/rendering-ansible-template-into-the-fact-variable
 * https://github.com/jenkinsci/github-branch-source-plugin/blob/master/docs/github-app.adoc
+
+
+## Paths:
+* `/etc/default/cloudbees-core-cm` startup file
+* Jenkins home: `/var/lib/cloudbees-core-oc`

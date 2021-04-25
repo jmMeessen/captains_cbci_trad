@@ -56,13 +56,6 @@
     mode: u=rw,g=r,o=r
 
 
-# #
-# # prepare to use Jenkins Configuration as Code
-# #
-
-# - name: configure Jenkins Configuration as Code
-#   include_tasks: 02-configure_JCasC.yml
-
 
 
 

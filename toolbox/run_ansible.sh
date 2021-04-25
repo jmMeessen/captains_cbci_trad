@@ -33,6 +33,7 @@ start=`date +%s`
 
 set +e #we turn off failure on error so that we can execute the timing info
 export ANSIBLE_SSH_ARGS="-F /Users/jmm/work/captains_cbci_trad/work_data/ssh_config -o ControlMaster=auto -o ControlPersist=60s"
+
 ansible-playbook --inventory-file=../work_data/inventory.yaml --vault-password-file ../toolbox/.work-password ../deploy/${ansible_file}
 
 end=`date +%s`

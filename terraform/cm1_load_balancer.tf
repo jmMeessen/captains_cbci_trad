@@ -51,16 +51,11 @@ resource "aws_lb_target_group_attachment" "target_group_attachment_cm1" {
   port             = 8080
 }
 
-output "cm1_load_balancer_dns" {
-  value = aws_lb.cm1_lb.dns_name
-}
-
-
 //Point cm1.the-captains-shack.com to the load balancer
 resource "ovh_domain_zone_record" "cm1" {
   zone      = var.domain_name
   subdomain = var.cm1_subdomain
   fieldtype = "CNAME"
-  ttl       = "30"
-  target    = "${aws_lb.cm1_lb.dns_name}."
+  ttl       = "60"                                //OVH does not accept values lower than 60
+  target    = "${lower(aws_lb.cm1_lb.dns_name)}." //lowercase to avoid OVH quirk
 }

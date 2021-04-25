@@ -16,7 +16,7 @@
     src: "/var/lib/{{ jenkins_user }}/secrets/defaultCfgToken"
     dest: "{{ jenkins_cfgmgt_dir }}/cfgAuthfile"
     force: yes
-    backup: no
+    backup: yes
     owner: "ubuntu"
     group: "ubuntu"
     mode: u=rw,g=,o= 
@@ -26,7 +26,10 @@
     url: "{{ cjoc_url }}/jnlpJars/jenkins-cli.jar"
     dest: "{{ jenkins_cfgmgt_dir }}/jenkins-cli.jar"
     timeout: 120
-  ignore_errors: yes  
+  register: result
+  until: result.failed == false
+  retries: 20
+  delay: 10
 
 - name: Create a CLI command varialble on remote (for debug purposes)
   template:

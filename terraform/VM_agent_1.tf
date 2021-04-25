@@ -18,11 +18,3 @@ resource "aws_instance" "agent1" {
     "cb:owner" = "user:Jmm"
   }
 }
-
-resource "aws_route53_record" "agent1" {
-  zone_id = aws_route53_zone.internal.id
-  name    = "agent1.${var.internal_domain_name}"
-  type    = "CNAME"
-  ttl     = "300"
-  records = [aws_instance.agent1.private_dns]
-}

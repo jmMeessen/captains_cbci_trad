@@ -1,0 +1,26 @@
+---
+
+- name: create directory to store the bundles
+  become: true
+  file:
+    path: "/var/lib/{{ jenkins_user }}/jcasc-bundles-store"
+    state: directory
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_user }}"
+    mode: u=rwx,g=rx,o=rx
+    
+
+- name: copy the bundles to the target server
+  become: true
+  copy:
+    src: "../../../bundles/"
+    dest: "/var/lib/{{ jenkins_user }}/jcasc-bundles-store"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_user }}"
+    force: yes
+    mode: u=rw,g=r,o=r
+
+
+- name: Generate the CasC linkfile for CM1
+  ansible.builtin.shell: "{{ CLI_command }} -webSocket casc-bundle-set-master -b CM1 -m /CM1 | jq -r '.linkFileContent' > {{ jenkins_cfgmgt_dir }}/CM1_linkfile.yml"
+

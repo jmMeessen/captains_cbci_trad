@@ -13,3 +13,7 @@ output "cm1_ip" {
 output "docker_agent_ip" {
   value = aws_instance.docker_agent.private_ip
 }
+
+output "agent1_ip" {
+  value = aws_instance.agent1.private_ip
+}

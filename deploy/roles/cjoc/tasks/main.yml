@@ -4,6 +4,13 @@
 - name: "Include the 'CJOC' installation specific variables" 
   include_vars: "cjoc.yml"
 
+- name: Create some useful aliases on the default (ubuntu user)
+  template: 
+    src: "bash_aliases.j2"
+    dest: "/home/ubuntu/.bash_aliases"
+    force: yes
+    mode: u=rw,g=r,o=r  
+
   #Proceeding this way is important so that the noWizard parameter works properly
 - name: Copy the initial configuration before first startup (CJOC)
   become: true
@@ -27,6 +34,7 @@
   apt_repository:
     repo: "{{ repo_url }}"
     state: present
+
 
 # To force a particular version:  "{{ package_name }}=2.138.3.1"
 - name: Install {{ option_friendly_name }}
@@ -77,7 +85,6 @@
 - name: Call configCLI playbook
   include_tasks: 02_configCLI.yml
 
-
 # apply the scripted configuration
 
 - name: Install default plugins
@@ -90,6 +97,9 @@
 
 - name: setup CJOC security
   include_tasks: 04_setup_CJOC_security.yml
+
+- name: Copy the CasC bundles
+  include_tasks: CasC_bundle.yml
 
 - name: create the Client Master
   include_tasks: 05_create-client-master.yml

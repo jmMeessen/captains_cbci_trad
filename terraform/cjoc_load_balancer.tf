@@ -52,16 +52,11 @@ resource "aws_lb_target_group_attachment" "cjoc_target_group_attachment" {
   port             = 8888
 }
 
-output "load_balancer_dns" {
-  value = aws_lb.cjoc_lb.dns_name
-}
-
-
 //Point CJOC.the-captains-shack.com to the load balancer
 resource "ovh_domain_zone_record" "cjoc" {
   zone      = var.domain_name
   subdomain = var.cjoc_subdomain
   fieldtype = "CNAME"
-  ttl       = "30"
-  target    = "${aws_lb.cjoc_lb.dns_name}."
+  ttl       = "60"
+  target    = "${lower(aws_lb.cjoc_lb.dns_name)}."
 }

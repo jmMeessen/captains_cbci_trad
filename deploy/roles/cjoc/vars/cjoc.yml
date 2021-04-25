@@ -33,3 +33,4 @@ default_plugins:
   - antisamy-markup-formatter
   - cloudbees-jenkins-advisor
   - operations-center-monitoring
+  

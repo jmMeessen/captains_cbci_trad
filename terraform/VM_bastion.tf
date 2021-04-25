@@ -45,14 +45,13 @@ resource "aws_security_group" "bastion_sg" {
 }
 
 resource "aws_instance" "bastion" {
-  ami                         = data.aws_ami.ubuntu.id
-  availability_zone           = var.aws_availability_zone
-  instance_type               = "m1.small"
-  key_name                    = aws_key_pair.my-aws-key.key_name
-  vpc_security_group_ids      = [aws_security_group.bastion_sg.id]
-  subnet_id                   = aws_subnet.public_subnet.id
-  associate_public_ip_address = false
-  source_dest_check           = false
+  ami                    = data.aws_ami.ubuntu.id
+  availability_zone      = var.aws_availability_zone
+  instance_type          = "m1.small"
+  key_name               = aws_key_pair.my-aws-key.key_name
+  vpc_security_group_ids = [aws_security_group.bastion_sg.id]
+  subnet_id              = aws_subnet.public_subnet.id
+  source_dest_check      = false
 
   tags = {
     Name       = "Bastion"

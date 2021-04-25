@@ -8,18 +8,25 @@
     group: "ubuntu"
     mode: u=rwx,g=,o=
 
-# retrieve the token
-- name: copy the configuration management token to the current user
+
+# As we are using SSO, retrieve the CFG_Mgt API token from the CJOC and enable it locally
+- name: Capture the CFG_mgt API token from CJOC
   become: true
+  ansible.builtin.command: "cat /var/lib/cloudbees-core-oc/secrets/defaultCfgToken"
+  delegate_to: "cjoc"
+  register: APItoken
+
+
+- name: create auth file locally with what we captured
   copy:
-    remote_src: true
-    src: "/var/lib/{{ jenkins_user }}/secrets/defaultCfgToken"
     dest: "{{ jenkins_cfgmgt_dir }}/cfgAuthfile"
+    content: "{{ APItoken.stdout }}"
     force: yes
-    backup: no
+    backup: yes
     owner: "ubuntu"
     group: "ubuntu"
-    mode: u=rw,g=,o= 
+    mode: u=rw,g=,o=
+
 
 - name: copy jenkins-cli.jar to cfgMgt directory
   get_url:
@@ -28,7 +35,7 @@
     timeout: 120
   register: result
   until: result.failed == false
-  retries: 5
+  retries: 20
   delay: 10
 
 # - name: Output of Script execution
@@ -55,3 +62,4 @@
     path: "{{ jenkins_cfgmgt_script_dir }}"
     state: directory
     mode: u=rwx,g=rx,o=rx
+

@@ -22,8 +22,9 @@ if(tokens.size() != 0) {
     tokens.each {
         apiTokenProperty.tokenStore.revokeToken(it.getUuid())
     }
-}
+} 
 
+logger.info("Generating new token.")
 def result = apiTokenProperty.tokenStore.generateNewToken(jenkinsTokenName).plainValue
 user.save()
 

@@ -11,6 +11,15 @@ NAME=cloudbees-core-cm
 JAVA_ARGS='-Djava.awt.headless=true \
 -Djenkins.install.runSetupWizard=false \
 -Dcb.BeekeeperProp.autoInstallIncremental=true \
+-XX:+AlwaysPreTouch \
+-XX:+UseG1GC \
+-XX:+UseStringDeduplication \
+-XX:+ParallelRefProcEnabled \
+-XX:+DisableExplicitGC \
+-Xmx2G \
+-Xms2G \
+-Dcom.cloudbees.jenkins.ha=false \
+-Dcore.casc.config.bundle=/home/ubuntu/casc-bundle-link.yml \
 -DMASTER_ENDPOINT="http://cm1.the-captains-shack.com" \
 -DMASTER_OPERATIONSCENTER_ENDPOINT="http://cjoc.the-captains-shack.com" \
 -DMASTER_INDEX="1" -DMASTER_NAME="CM-1" -DMASTER_GRANT_ID="1-CM-1" -DMASTER_WEBSOCKET=true'

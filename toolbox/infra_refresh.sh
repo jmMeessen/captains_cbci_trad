@@ -7,6 +7,11 @@ set -u              #fail script when a variable is uninitialised
 # For consistant processing, CD to the Toolbox directory
 cd "$(cd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null && pwd)" || return
 
-source ./gather_IPs.sh 
 
-ssh-keygen -R ${cjoc_ip}
+source ~/.ovhrc
+
+./update_aws_token.sh
+
+cd ../terraform
+terraform refresh
+cd -

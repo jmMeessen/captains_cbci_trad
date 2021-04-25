@@ -56,7 +56,7 @@ resource "aws_security_group" "sg-cm" {
     from_port   = 5000
     to_port     = 5000
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.vpc_cidr]
   }
 
   vpc_id = aws_vpc.jmm-aws-vpc.id
@@ -82,4 +82,13 @@ resource "aws_instance" "cm1" {
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }
+}
+
+# FIXME: remove block
+resource "aws_route53_record" "cm1" {
+  zone_id = aws_route53_zone.internal.id
+  name    = "cm1.${var.internal_domain_name}"
+  type    = "CNAME"
+  ttl     = "300"
+  records = [aws_instance.cm1.private_dns]
 }

@@ -1,4 +1,4 @@
-FROM azul/zulu-openjdk-alpine:8u222-jre
+FROM azul/zulu-openjdk-alpine:8u272-jre
 
 LABEL authors="Joost van der Griendt <joostvdg@gmail.com>"
 LABEL version="0.2.0"
@@ -10,7 +10,8 @@ EXPOSE 1389 1636 4444
 ENV CHANGE_DATE='20190916-2100'
 ENV JAVA_HOME /usr/lib/jvm/zulu-8
 ENV OPENDJ_JAVA_HOME /usr/lib/jvm/zulu-8
-ENV VERSION=4.4.3
+ENV VERSION=4.4.3 
+# FIXME: bump to latest version is 4.4.10, was 4.4.3
 ENV ROOT_USER_DN='cn=admin'
 ENV ROOT_PASSWORD='changeme'
 RUN apk add --no-cache tini

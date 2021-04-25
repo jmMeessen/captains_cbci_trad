@@ -4,6 +4,34 @@
 - name: "Include the 'Client Master #1' installation specific variables" 
   include_vars: "master.yml"
 
+- name: Create some useful aliases on the default (ubuntu user)
+  template: 
+    src: "bash_aliases.j2"
+    dest: "/home/ubuntu/.bash_aliases"
+    force: yes
+    mode: u=rw,g=r,o=r  
+
+- name: Configure the limits for this system
+  become: true
+  ansible.builtin.copy:
+    src: "limits.conf"
+    dest: "/etc/security/limits.d/cloudbees.conf"
+    force: yes
+    backup: yes
+    owner: "root"
+    group: "root"
+    mode: u=rw,g=r,o=r    
+
+- name: Capture the CasC linkfile we prapared on the CJOC
+  ansible.builtin.command: "cat /home/ubuntu/ConfigMgt/CM1_linkfile.yml"
+  delegate_to: "cjoc"
+  register: linkFile_text
+
+- name: create file locally with what we captured
+  shell: "echo '{{ linkFile_text.stdout }}' > /home/ubuntu/casc-bundle-link.yml"
+  args: 
+    creates: /home/ubuntu/casc-bundle-link.yml
+
 - name: Copy and update the initial configuration before first startup (Master)
   #Proceeding this way is important so that the noWizard parameter works properly
   become: true
@@ -35,7 +63,7 @@
     update_cache: yes
     name: "{{ package_name }}"
 
-- name: create the init.groovy.d directory
+- name: create the init.groovy.d directory (just in case)
   become: true
   file:
     path: "/var/lib/{{ jenkins_user }}/init.groovy.d"
@@ -44,19 +72,11 @@
     group: "{{ jenkins_user }}"
     mode: "u=rwx,g=rx,o=rx"
 
-- name: Load initial user creation and security settings
-  include_tasks: 01_initial_jenkins_config.yml
-
-# # FIXME:
-# - name: configure Jenkins Configuration as Code
-#   include_tasks: JCasC.yml
-
-# This will load the properties and execute the initscripts 
-- name: restart the {{ package_name }} service 
-  become: true
-  service:
-    name: "{{ package_name }}"
-    state: restarted
+#
+# Setup everything required to use the CLI
+#
+- name: Call configCLI playbook
+  include_tasks: 02_configCLI.yml
 
 - name: wait for jenkins to be up
   uri: 
@@ -67,16 +87,8 @@
   retries: 60
   delay: 1
 
-
 #
-# Setup everything required to use the CLI
+# Prepare everything to connect the JNLP Agent
 #
-- name: Call configCLI playbook
-  include_tasks: 02_configCLI.yml
-
-# apply the scripted configuration
-
-- name: Install default plugins
-  ansible.builtin.command: "{{ CLI_command }} install-plugin {{ item }} -deploy"
-  loop: "{{ default_plugins }}"
-
+- name: Call JNLP startup playbook
+  include_tasks: 03_jnlp_startup.yml

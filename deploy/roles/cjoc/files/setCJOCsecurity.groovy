@@ -4,7 +4,6 @@ import com.cloudbees.opscenter.server.sso.SecurityEnforcerImpl
 import com.cloudbees.opscenter.server.security.RestrictedEquivalentRAMF
 
 /*
-Author: Philip Cheong
 This script will set the Security Setting Enforcement to Single Sign-On (security realm and authorization strategy)
 The authentication mapping can be changed from RestrictedEquivalentRAMF to either TrustedEquivalentRAMF
 or UntrustedEquivalentRAMF
