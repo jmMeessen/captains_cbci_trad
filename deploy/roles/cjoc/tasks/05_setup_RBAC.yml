@@ -1,0 +1,11 @@
+---
+
+- name: copy RBAC setup groovy script 
+  copy:
+    src: "config_rbac.groovy"
+    dest: "{{ jenkins_cfgmgt_script_dir }}/config_rbac.groovy"
+    force: yes
+    mode: u=rw,g=r,o=r
+
+- name: Execute RBAC setup script
+  ansible.builtin.shell: "cat {{ jenkins_cfgmgt_script_dir }}/config_rbac.groovy | {{ CLI_command }} groovy ="

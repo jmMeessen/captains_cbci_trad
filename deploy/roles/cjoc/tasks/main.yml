@@ -36,12 +36,12 @@
     state: present
 
 
-# To force a particular version:  "{{ package_name }}=2.138.3.1"
+# To force a particular version:  "{{ package_name }}=2.277.3.1"
 - name: Install {{ option_friendly_name }}
   become: true
   apt:
     update_cache: yes
-    name: "{{ package_name }}"
+    name: "{{ package_name }}=2.277.3.1"
 
 - name: create the init.groovy.d directory
   become: true
@@ -123,15 +123,14 @@
 - name: setup CJOC security
   include_tasks: 04_setup_CJOC_security.yml
 
+- name: setup RBAC
+  include_tasks: 05_setup_RBAC.yml
+
 - name: Copy the CasC bundles
-  include_tasks: CasC_bundle.yml
+  include_tasks: 06_CasC_bundle.yml
 
 - name: create the Client Master
-  include_tasks: 05_create-client-master.yml
-
-# - name: copy plugin catalogs
-#   include_tasks: plugin-catalog.yml
-#   when: jenkins_node_type is search("cjoc")
+  include_tasks: 07_create-client-master.yml
 
 - name: Loading github API token
   set_fact:

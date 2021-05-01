@@ -23,4 +23,4 @@
 
 - name: Generate the CasC linkfile for CM1
   ansible.builtin.shell: "{{ CLI_command }} -webSocket casc-bundle-set-master -b CM1 -m /CM1 | jq -r '.linkFileContent' > {{ jenkins_cfgmgt_dir }}/CM1_linkfile.yml"
-
+#FIXME: check that a real file was created
