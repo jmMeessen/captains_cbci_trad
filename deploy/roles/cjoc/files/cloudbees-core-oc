@@ -9,6 +9,13 @@ NAME=cloudbees-core-oc
 JAVA_ARGS="-Djava.awt.headless=true \
 -Djenkins.install.runSetupWizard=false \
 -Dcb.BeekeeperProp.autoInstallIncremental=true \
+-XX:+AlwaysPreTouch \
+-XX:+UseG1GC \
+-XX:+UseStringDeduplication \
+-XX:+ParallelRefProcEnabled \
+-XX:+DisableExplicitGC \
+-Xmx2G \
+-Xms2G \
 -Dcom.cloudbees.jenkins.ha=false"
 
 #JAVA_ARGS="-Xmx256m"
