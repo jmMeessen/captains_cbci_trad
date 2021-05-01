@@ -16,6 +16,27 @@
 #   register: cowsay_out
 # - debug: var=cowsay_out.stdout_lines
 
+#[WARNING]: Module remote_tmp /home/ubuntu/.ansible/tmp did not exist and was created with a mode of 0700, this may cause issues when running as another user.
+# To avoid this, create the remote_tmp dir with the correct permissions manually
+# required to suppress the warning we get because we enabled pipelining in the Ansible configuration
+- name: create remote Ansible temporary directory 
+  file:
+    path: "/home/ubuntu/.ansible/tmp"
+    state: directory
+    owner: "ubuntu"
+    group: "ubuntu"
+    mode: "u=rwx,g=,o="
+
+
+- name: create remote Ansible temporary directory for root
+  become: true
+  file:
+    path: "/root/.ansible/tmp"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: "u=rwx,g=,o="
+
 - name: Update the system
   become: true
   apt:
