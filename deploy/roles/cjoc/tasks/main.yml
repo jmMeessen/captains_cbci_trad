@@ -52,6 +52,26 @@
     group: "{{ jenkins_user }}"
     mode: "u=rwx,g=rx,o=rx"
 
+- name: copy the "init start" semaphore script
+  become: true
+  copy: 
+    src: "set_init_semaphore.groovy"
+    dest: "{{ jenkins_home_dir }}/init.groovy.d/000-set_init_semaphore.groovy"
+    force: yes
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_user }}"
+    mode: u=rw,g=r,o=r   
+
+- name: copy the init end semaphore script
+  become: true
+  copy: 
+    src: "delete_init_semaphore.groovy"
+    dest: "{{ jenkins_home_dir }}/init.groovy.d/999-delete_init_semaphore.groovy"
+    force: yes
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_user }}"
+    mode: u=rw,g=r,o=r   
+
 - name: Prepare everything to load the license on CJOC
   include_tasks: 00_load-license.yml
 
@@ -82,6 +102,11 @@
 #
 # Setup everything required to use the CLI
 #
+- name: Wait for the init scripts to complete
+  wait_for:
+    path: /var/lib/cloudbees-core-oc/init_semaphore.txt
+    state: absent
+
 - name: Call configCLI playbook
   include_tasks: 02_configCLI.yml
 

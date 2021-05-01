@@ -2,10 +2,3 @@
 
 - name: Install Docker and Docker-compose binaries
   include_tasks: docker.yml
-
-
-# - name: Start setting up the IP Tables
-#   include_tasks: roles/general/tasks/iptables-task.yml
-
-# - name: create jenkins user
-# - name: add jenkins user to docker group

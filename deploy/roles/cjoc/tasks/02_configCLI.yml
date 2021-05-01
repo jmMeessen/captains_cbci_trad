@@ -8,7 +8,18 @@
     group: "ubuntu"
     mode: u=rwx,g=,o=
 
-# retrieve the token
+- name: copy jenkins-cli.jar to cfgMgt directory
+  get_url:
+    url: "{{ cjoc_url }}/jnlpJars/jenkins-cli.jar"
+    dest: "{{ jenkins_cfgmgt_dir }}/jenkins-cli.jar"
+    timeout: 120
+  register: result
+  until: result.failed == false
+  retries: 20
+  delay: 10
+
+# We need to copy the token after the JAR was successfuly downloaded as this is a
+# good indication that the initialization (and generation of the Api Token) had time to complete
 - name: copy the configuration management token to the current user
   become: true
   copy:
@@ -21,15 +32,6 @@
     group: "ubuntu"
     mode: u=rw,g=,o= 
 
-- name: copy jenkins-cli.jar to cfgMgt directory
-  get_url:
-    url: "{{ cjoc_url }}/jnlpJars/jenkins-cli.jar"
-    dest: "{{ jenkins_cfgmgt_dir }}/jenkins-cli.jar"
-    timeout: 120
-  register: result
-  until: result.failed == false
-  retries: 20
-  delay: 10
 
 - name: Create a CLI command varialble on remote (for debug purposes)
   template:

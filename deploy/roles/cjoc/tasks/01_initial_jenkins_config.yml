@@ -8,7 +8,7 @@
   become: true
   template: 
     src: "initial_security.groovy.j2"
-    dest: "{{ jenkins_home_dir }}/init.groovy.d/000-initial_security.groovy"
+    dest: "{{ jenkins_home_dir }}/init.groovy.d/011-initial_security.groovy"
     force: yes
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_user }}"
@@ -18,7 +18,7 @@
   become: true
   template: 
     src: "set_url.groovy.j2"
-    dest: "{{ jenkins_home_dir }}/init.groovy.d/002-set_url.groovy"
+    dest: "{{ jenkins_home_dir }}/init.groovy.d/012-set_url.groovy"
     force: yes
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_user }}"
@@ -28,7 +28,7 @@
   become: true
   copy: 
     src: "set-JNLP-port.groovy"
-    dest: "{{ jenkins_home_dir }}/init.groovy.d/003-set-JNLP-port.groovy"
+    dest: "{{ jenkins_home_dir }}/init.groovy.d/013-set-JNLP-port.groovy"
     force: yes
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_user }}"
@@ -39,7 +39,7 @@
   become: true
   template: 
     src: "create_cfgmgt_user.groovy.j2"
-    dest: "{{ jenkins_home_dir }}/init.groovy.d/005-create_cfgmgt_user.groovy"
+    dest: "{{ jenkins_home_dir }}/init.groovy.d/015-create_cfgmgt_user.groovy"
     force: yes
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_user }}"
@@ -49,7 +49,7 @@
   become: true
   copy:
     src: "generateToken.groovy"
-    dest: "{{ jenkins_home_dir }}/init.groovy.d/006-generateToken.groovy"
+    dest: "{{ jenkins_home_dir }}/init.groovy.d/016-generateToken.groovy"
     force: yes
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_user }}"
