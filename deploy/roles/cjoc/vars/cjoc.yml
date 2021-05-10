@@ -8,7 +8,7 @@ jenkins_home_dir: "/var/lib/{{ package_name }}"
 jenkins_cfgmgt_dir: "/home/ubuntu/ConfigMgt"
 jenkins_cfgmgt_script_dir: "{{ jenkins_cfgmgt_dir }}/jenkins_scripts"
 cjoc_url: "http://cjoc.the-captains-shack.com"
-jenkins_cfgmgt_user: "Jenkins_cfg"
+jenkins_cfgmgt_user: "jenkins_cfg"
 CLI_command: java -jar {{ jenkins_cfgmgt_dir }}/jenkins-cli.jar -s {{ cjoc_url }} -auth @{{ jenkins_cfgmgt_dir }}/cfgAuthfile
 
 default_plugins:

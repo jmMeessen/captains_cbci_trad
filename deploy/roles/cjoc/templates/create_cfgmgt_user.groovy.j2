@@ -14,13 +14,7 @@ def users = hudsonRealm.getAllUsers()
 users_s = users.collect { it.toString() }
 
 if ("{{ jenkins_cfgmgt_user }}" in users_s) {
-    logger.info("         Jenkins_cfg user already exists - updating password")
-
-    def user = hudson.model.User.get('{{ jenkins_cfgmgt_user }}');
-    def password = hudson.security.HudsonPrivateSecurityRealm.Details.fromPlainPassword('{{ jenkins_default_admin_password }}')
-    user.addProperty(password)
-
-    user.save()
+    logger.info("         Jenkins_cfg user already exists - skipping")
 }
 else {
     logger.info("         creating Jenkins_cfg user")
