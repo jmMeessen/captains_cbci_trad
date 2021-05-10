@@ -23,7 +23,7 @@ resource "aws_internet_gateway" "jmm_internet_gateway" {
   NAT instance for private to internet traffic
 */
 resource "aws_security_group" "nat" {
-  name        = "vpc_nat"
+  name        = "Jmm vpc_nat"
   description = "Allow traffic to pass from the private subnet to the internet"
 
   ingress {
@@ -155,7 +155,7 @@ resource "aws_subnet" "private_subnet" {
   availability_zone = var.aws_availability_zone
 
   tags = {
-    Name       = "Private Subnet"
+    Name       = "Jmm Private Subnet"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }
@@ -167,7 +167,7 @@ resource "aws_route_table" "route_table" {
   vpc_id = aws_vpc.jmm-aws-vpc.id
 
   tags = {
-    Name       = "Private Subnet route table"
+    Name       = "Jmm Private Subnet route table"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }

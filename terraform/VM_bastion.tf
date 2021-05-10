@@ -54,7 +54,7 @@ resource "aws_instance" "bastion" {
   source_dest_check      = false
 
   tags = {
-    Name       = "Bastion"
+    Name       = "Jmm Bastion"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }
@@ -63,4 +63,11 @@ resource "aws_instance" "bastion" {
 resource "aws_eip" "bastion" {
   instance = aws_instance.bastion.id
   vpc      = true
+
+  tags = {
+    Name       = "Jmm Bastion's EIP"
+    Owner      = "Jmm"
+    "cb:owner" = "user:Jmm"
+  }
+
 }

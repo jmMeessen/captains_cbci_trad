@@ -13,7 +13,7 @@ resource "aws_instance" "docker_agent" {
   source_dest_check      = false
 
   tags = {
-    Name       = "Docker agent"
+    Name       = "Jmm's Docker agent"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }

@@ -13,7 +13,7 @@ resource "aws_instance" "agent1" {
   source_dest_check      = false
 
   tags = {
-    Name       = "Agent1"
+    Name       = "Jmm Agent1"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }

@@ -62,7 +62,7 @@ resource "aws_security_group" "sg-cjoc" {
   vpc_id = aws_vpc.jmm-aws-vpc.id
 
   tags = {
-    Name       = "cjocSG"
+    Name       = "Jmm's cjocSG"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }
@@ -78,7 +78,7 @@ resource "aws_instance" "cjoc" {
   source_dest_check      = false
 
   tags = {
-    Name       = "CJOC VM"
+    Name       = "Jmm's CJOC VM"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }

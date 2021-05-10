@@ -31,7 +31,7 @@ resource "aws_security_group" "agent_sg" {
   vpc_id = aws_vpc.jmm-aws-vpc.id
 
   tags = {
-    Name       = "default_agent_SG"
+    Name       = "Jmm_default_agent_SG"
     Owner      = "Jmm"
     "cb:owner" = "user:Jmm"
   }
