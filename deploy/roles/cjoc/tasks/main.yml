@@ -41,7 +41,7 @@
   become: true
   apt:
     update_cache: yes
-    name: "{{ package_name }}=2.277.3.1"
+    name: "{{ package_name }}"
 
 - name: create the init.groovy.d directory
   become: true

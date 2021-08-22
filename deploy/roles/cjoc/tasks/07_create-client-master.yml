@@ -14,3 +14,19 @@
 - name: Output of Script execution
   debug: 
     var: output.stdout
+
+- name: Generate the CasC linkfile for CM1
+  ansible.builtin.shell: "{{ CLI_command }} -webSocket casc-bundle-set-controller -b CM1 -c /CM1 | jq -r '.linkFileContent' > {{ jenkins_cfgmgt_dir }}/CM1_linkfile.yml"
+
+- name: Get the CasC linkfile details
+  ansible.builtin.stat:
+    path: "{{ jenkins_cfgmgt_dir }}/CM1_linkfile.yml"
+  register: linkfile_stats
+
+#- debug: var=linkfile_stats
+
+- name: check the CasC linkfile
+  assert:
+    that:
+      - "linkfile_stats.stat.exists"
+      - "linkfile_stats.stat.size > 0"
