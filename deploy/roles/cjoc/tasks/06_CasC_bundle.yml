@@ -20,6 +20,6 @@
     force: yes
     mode: u=rw,g=r,o=r
 
-- name: Generate the CasC linkfile for CM1
+- name: Set the CasC availability pattern
   ansible.builtin.shell: "{{ CLI_command }} -webSocket casc-bundle-set-availability-pattern -b CM1 -p '.*'"
 
